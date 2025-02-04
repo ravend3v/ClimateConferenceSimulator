@@ -1,4 +1,4 @@
-package simu.framework;
+package simulation.framework;
 
 public class Trace {
 
