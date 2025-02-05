@@ -5,14 +5,13 @@ import simulation.framework.Trace;
 import simulation.framework.Trace.Level;
 import simulation.model.OwnMotor;
 
-public class Simulator { //Tekstipohjainen
+public class Simulator { // Text-based
 
 	public static void main(String[] args) {
-		
+
 		Trace.setTraceLevel(Level.INFO);
-		Motor m = new OwnMotor();
-		m.setSimulointiaika(1000);
-		m.aja();
-		///
+		Motor motor = new OwnMotor();
+		motor.setSimulationTime(1000);
+		motor.run();
 	}
 }
