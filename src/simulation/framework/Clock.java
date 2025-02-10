@@ -21,6 +21,6 @@ public class Clock {
 	}
 
 	public double getTime(){
-		return time
+		return time;
     }
 }
