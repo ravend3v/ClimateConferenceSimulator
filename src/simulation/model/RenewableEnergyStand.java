@@ -1,5 +1,8 @@
 package simulation.model;
 
+import simulation.framework.*;
+import eduni.distributions.ContinuousGenerator;
+
 public class RenewableEnergyStand extends ServicePoint {
     private int capacity;
 
