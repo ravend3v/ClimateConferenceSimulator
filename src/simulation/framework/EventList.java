@@ -21,4 +21,8 @@ public class EventList {
 	public double getNextEventTime() {
 		return list.peek().getTime();
 	}
+
+	public int getSize() {
+		return list.size();
+	}
 }
