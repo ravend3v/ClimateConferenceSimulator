@@ -12,8 +12,8 @@ public class ServicePoint {
 	private final ContinuousGenerator generator;
 	private final EventList eventList;
 	private final EventType scheduledEventType;
-  private final int capacity;
-  private final int currentCustomerCount;
+  	private final int capacity;
+  	private final int currentCustomerCount;
 
 	//QueueStrategy strategy; //option: customer order
 
