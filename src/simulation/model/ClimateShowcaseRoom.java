@@ -5,13 +5,9 @@ import eduni.distributions.ContinuousGenerator;
 
 
 public class ClimateShowcaseRoom extends ServicePoint {
-    private int capacity;
-    private int currentCustomerCount;
 
-    public ClimateShowcaseRoom(ContinuousGenerator generator, EventList eventList, EventType type, int capacity) {
-        super(generator, eventList, type);
-        this.capacity = capacity;
-        this.currentCustomerCount = 0;
+    public ClimateShowcaseRoom(ContinuousGenerator generator, EventList eventList, EventType type, int capacity, int currentCustomerCount) {
+        super(generator, eventList, type, capacity, currentCustomerCount);
     }
 
     @Override
@@ -20,7 +16,7 @@ public class ClimateShowcaseRoom extends ServicePoint {
     }
 
     @Override
-    public void setCurrentCustomerCount() {
+    public void setCurrentCustomerCount(int currentCustomerCount) {
         this.currentCustomerCount = currentCustomerCount;
     }
 
