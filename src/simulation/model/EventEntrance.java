@@ -10,14 +10,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class EventEntrance extends ServicePoint{
-    private int capacity;
-    private int currentCustomerCount;
     private Set<Customer> processing = new HashSet<>();
 
-    public EventEntrance(ContinuousGenerator generator, EventList eventList, EventType type, int capacity){
-        super(generator,eventList,type);
-        this.capacity = capacity;
-        currentCustomerCount = 0;
+    public EventEntrance(ContinuousGenerator generator, EventList eventList, EventType type, int capacity, int currentCustomerCount){
+        super(generator,eventList,type, capacity, currentCustomerCount);
     }
 
     @Override
