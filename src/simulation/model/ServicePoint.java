@@ -49,4 +49,23 @@ public class ServicePoint {
 		return queue.size() != 0;
 	}
 
+	public EventList getEventList() {
+		return eventList;
+	}
+
+	public ContinuousGenerator getGenerator() {
+		return generator;
+	}
+
+	public EventType getScheduledEventType() {
+		return scheduledEventType;
+	}
+
+	public void setBusy(boolean busy) {
+		this.busy = busy;
+	}
+
+	public LinkedList<Customer> getQueue() {
+		return queue;
+	}
 }
