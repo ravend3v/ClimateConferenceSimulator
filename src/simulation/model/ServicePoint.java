@@ -1,7 +1,7 @@
 package simulation.model;
 
+import simulation.framework.*;
 import java.util.LinkedList;
-
 import eduni.distributions.ContinuousGenerator;
 
 // TODO:
@@ -19,10 +19,12 @@ public class ServicePoint {
 
 	private boolean busy = false;
 
-	public ServicePoint(ContinuousGenerator generator, EventList eventList, EventType type){
+	public ServicePoint(ContinuousGenerator generator, EventList eventList, EventType type, int capacity, int currentCustomerCount){
 		this.eventList = eventList;
 		this.generator = generator;
 		this.scheduledEventType = type;
+		this.capacity = capacity;
+		this.currentCustomerCount = currentCustomerCount;
 	}
 
 	public void addToQueue(Customer c){   // The first customer in the queue is always in service
