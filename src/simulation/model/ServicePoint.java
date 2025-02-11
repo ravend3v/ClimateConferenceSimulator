@@ -12,8 +12,8 @@ public class ServicePoint {
 	private final ContinuousGenerator generator;
 	private final EventList eventList;
 	private final EventType scheduledEventType;
-    private final int capacity;
-    private final int currentCustomerCount;
+  private final int capacity;
+  private final int currentCustomerCount;
 
 	//QueueStrategy strategy; //option: customer order
 
@@ -53,4 +53,23 @@ public class ServicePoint {
 		return queue.size() != 0;
 	}
 
+	public EventList getEventList() {
+		return eventList;
+	}
+
+	public ContinuousGenerator getGenerator() {
+		return generator;
+	}
+
+	public EventType getScheduledEventType() {
+		return scheduledEventType;
+	}
+
+	public void setBusy(boolean busy) {
+		this.busy = busy;
+	}
+
+	public LinkedList<Customer> getQueue() {
+		return queue;
+	}
 }
