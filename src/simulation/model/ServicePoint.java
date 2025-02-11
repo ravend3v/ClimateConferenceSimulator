@@ -12,15 +12,19 @@ public class ServicePoint {
 	private final ContinuousGenerator generator;
 	private final EventList eventList;
 	private final EventType scheduledEventType;
+  private final int capacity;
+  private final int currentCustomerCount;
 
 	//QueueStrategy strategy; //option: customer order
 
 	private boolean busy = false;
 
-	public ServicePoint(ContinuousGenerator generator, EventList eventList, EventType type){
+	public ServicePoint(ContinuousGenerator generator, EventList eventList, EventType type, int capacity, int currentCustomerCount){
 		this.eventList = eventList;
 		this.generator = generator;
 		this.scheduledEventType = type;
+		this.capacity = capacity;
+		this.currentCustomerCount = currentCustomerCount;
 	}
 
 	public void addToQueue(Customer c){   // The first customer in the queue is always in service
