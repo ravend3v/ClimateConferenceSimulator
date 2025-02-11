@@ -1,7 +1,7 @@
 package simulation.model;
 
-import simulation.framework.*;
 import java.util.LinkedList;
+
 import eduni.distributions.ContinuousGenerator;
 
 // TODO:
@@ -12,6 +12,8 @@ public class ServicePoint {
 	private final ContinuousGenerator generator;
 	private final EventList eventList;
 	private final EventType scheduledEventType;
+    private final int capacity;
+    private final int currentCustomerCount;
 
 	//QueueStrategy strategy; //option: customer order
 
