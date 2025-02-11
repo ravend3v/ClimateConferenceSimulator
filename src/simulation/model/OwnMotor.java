@@ -39,14 +39,17 @@ public class OwnMotor extends Motor {
 				break;
 			case DEP1:
 				customer = (Customer) servicePoints[0].removeFromQueue();
+
 				servicePoints[1].addToQueue(customer);
 				break;
 			case DEP2:
 				customer = (Customer) servicePoints[1].removeFromQueue();
+
 				servicePoints[2].addToQueue(customer);
 				break;
 			case DEP3:
 				customer = (Customer) servicePoints[2].removeFromQueue();
+
 				customer.setExitTime(Clock.getInstance().getTime());
 				customer.report();
 		}
@@ -55,11 +58,13 @@ public class OwnMotor extends Motor {
 	@Override
 	protected void tryCEvents() {
 		for (ServicePoint p : servicePoints) {
-			if (!p.isBusy() && p.hasQueue()) {
+			if (!p.isBusy() && p.hasQueue() && !(p instanceof EventEntrance && ((EventEntrance) p).getCurrentCustomerCount() > 0)) {
+				Trace.out(Trace.Level.INFO, "Calling startService() for " + p.getClass().getSimpleName());
 				p.startService();
 			}
 		}
 	}
+
 
 	@Override
 	protected void results() {
