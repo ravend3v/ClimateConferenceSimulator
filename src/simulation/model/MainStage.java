@@ -16,34 +16,12 @@ public class MainStage extends ServicePoint {
     }
 
     @Override
-    public void startService() {
-        while (currentCustomerCount < capacity && getQueue().peek() != null) {
-            Customer customer = getQueue().peek();
-
-            if (customer != null) {
-                if (processing.contains(customer)) {
-                    break;
-                }
-                processing.add(customer);
-                Trace.out(Trace.Level.INFO, "Starting event at the Main Stage for customer " + customer.getId());
-                double serviceTime = getGenerator().sample();
-                getEventList().add(new Event(getScheduledEventType(), Clock.getInstance().getTime() + serviceTime));
-                currentCustomerCount++;
-                if (currentCustomerCount == capacity) {
-                    setBusy(true);
-                    break;
-                }
-            } else {
-                break;
-            }
-        }
-    }
-
-    @Override
     public Customer removeFromQueue() {
         setBusy(false);
         currentCustomerCount--;
-        return getQueue().poll();
+        Customer c = getQueue().poll();
+        processing.remove(c);
+        return c;
     }
 
     @Override
@@ -51,5 +29,35 @@ public class MainStage extends ServicePoint {
         return currentCustomerCount >= capacity;
     }
 
-}
+    @Override
+    public void startService() {
+        while (currentCustomerCount < capacity && !getQueue().isEmpty()) {
+            Customer customer = getQueue().poll();
 
+            // Check if the customer is null or already being processed
+            if (customer == null || processing.contains(customer)) {
+                if (customer != null) {
+                    getQueue().add(customer);
+                }
+                continue;
+            }
+            processing.add(customer);
+            Trace.out(Trace.Level.INFO, "Starting main event for customer " + customer.getId());
+
+            double serviceTime = getGenerator().sample();
+            getEventList().add(new Event(getScheduledEventType(), Clock.getInstance().getTime() + serviceTime));
+            currentCustomerCount++;
+            System.out.println("current count: " + currentCustomerCount);
+
+            if (currentCustomerCount == capacity) {
+                Trace.out(Trace.Level.INFO, "MainStage is full.");
+                setBusy(true);
+                break;
+            }
+        }
+        for (Customer c : processing) {
+            this.addToQueue(c);
+        }
+    }
+
+}
