@@ -15,20 +15,23 @@ public class EventEntrance extends ServicePoint{
 
     @Override
     public Customer removeFromQueue() {
-        setBusy(false);
-        currentCustomerCount--;
+
         Customer c = null;
         double smallestTime = Double.MAX_VALUE;
+
         for(Map.Entry<Double,Customer>entry: exitTimes.entrySet()){
             if(entry.getKey()<smallestTime){
                 smallestTime = entry.getKey();
                 c = entry.getValue();
             }
         }
+
         if(c!=null){
             exitTimes.remove(smallestTime);
             getQueue().remove(c);
             processing.remove(c);
+            setBusy(false);
+            currentCustomerCount--;
         }
 
         return c;
@@ -55,7 +58,7 @@ public class EventEntrance extends ServicePoint{
             getEventList().add(new Event(getScheduledEventType(), Clock.getInstance().getTime() + serviceTime));
             exitTimes.put(Clock.getInstance().getTime() + serviceTime,customer);
             currentCustomerCount++;
-            System.out.println("current count: " + currentCustomerCount);
+            System.out.println("current count at event entrance: " + currentCustomerCount);
 
             if (currentCustomerCount == capacity) {
                 Trace.out(Trace.Level.INFO, "EventEntrance is full.");

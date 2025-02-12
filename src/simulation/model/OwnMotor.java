@@ -12,11 +12,12 @@ public class OwnMotor extends Motor {
 
 	public OwnMotor(){
 
-		servicePoints = new ServicePoint[3];
+		servicePoints = new ServicePoint[4];
 
 		servicePoints[0] = new EventEntrance(new Normal(10, 10), eventList, EventType.DEP1,2, 0);
-		servicePoints[1] = new ServicePoint(new Normal(10, 10), eventList, EventType.DEP2, 4, 0);
-		servicePoints[2] = new ServicePoint(new Normal(5, 3), eventList, EventType.DEP3, 5, 0);
+		servicePoints[1] = new RenewableEnergyStand(new Normal(10, 10), eventList, EventType.DEP2, 4, 0);
+		servicePoints[2] = new ClimateShowcaseRoom(new Normal(5, 3), eventList, EventType.DEP3, 5, 0);
+		servicePoints[3] = new MainStage(new Normal(5, 3), eventList, EventType.DEP4, 10, 0);
 
 		queue = new Queue(new Negexp(5, 5), eventList, EventType.ARR1);
 
@@ -43,14 +44,18 @@ public class OwnMotor extends Motor {
 				break;
 			case DEP2:
 				customer = (Customer) servicePoints[1].removeFromQueue();
-
 				servicePoints[2].addToQueue(customer);
 				break;
 			case DEP3:
 				customer = (Customer) servicePoints[2].removeFromQueue();
+				servicePoints[3].addToQueue(customer);
+				break;
+			case DEP4:
+				customer = (Customer) servicePoints[3].removeFromQueue();
 
 				customer.setExitTime(Clock.getInstance().getTime());
 				customer.report();
+
 		}
 	}
 
