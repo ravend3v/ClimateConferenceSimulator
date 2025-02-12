@@ -34,9 +34,6 @@ public class EventEntrance extends ServicePoint{
 
             // Check if the customer is null or already being processed
             if (customer == null || processing.contains(customer)) {
-                if (customer != null) {
-                    getQueue().add(customer);
-                }
                 continue;
             }
             processing.add(customer);
@@ -53,8 +50,11 @@ public class EventEntrance extends ServicePoint{
                 break;
             }
         }
+
         for (Customer c : processing) {
             this.addToQueue(c);
         }
+
+
     }
 }
