@@ -6,7 +6,9 @@ import simulation.framework.Event;
 import simulation.framework.EventList;
 import simulation.framework.Trace;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class EventEntrance extends ServicePoint{
@@ -17,10 +19,16 @@ public class EventEntrance extends ServicePoint{
     }
 
     @Override
-    public Customer removeFromQueue() {  // Remove the customer who was in service
+    public Customer removeFromQueue() {
+        if(getQueue().isEmpty()){
+            System.out.println("pööpötti");
+        }
+
         setBusy(false);
         currentCustomerCount--;
-        return getQueue().poll();
+        Customer c = getQueue().poll();
+        processing.remove(c);
+        return c;
     }
 
     @Override
@@ -32,32 +40,45 @@ public class EventEntrance extends ServicePoint{
         return currentCustomerCount;
     }
 
+
     @Override
-    public void startService(){
+    public void startService() {
+        List<Customer> skippedCustomers = new ArrayList<>();
 
-        while(currentCustomerCount < capacity && getQueue().peek() != null){
-            Customer customer = getQueue().peek();
+        while (currentCustomerCount < capacity && !getQueue().isEmpty()) {
+            Customer customer = getQueue().poll();
 
-            if(customer != null){
-                if(processing.contains(customer)){
-                    break;
-                }
-                processing.add(customer);
-                Trace.out(Trace.Level.INFO, "Starting event entrance for customer " + customer.getId());
-                double serviceTime = getGenerator().sample();
-                getEventList().add(new Event(getScheduledEventType(), Clock.getInstance().getTime() + serviceTime));
-                currentCustomerCount ++;
-                if(currentCustomerCount == capacity){
-                    setBusy(true);
-                    break;
-                }
-            }
-
-            else{
+            if (customer == null) {
                 break;
             }
 
+            if (processing.contains(customer)) {
+                skippedCustomers.add(customer);
+                continue;
+            }
+
+            processing.add(customer);
+            Trace.out(Trace.Level.INFO, "Starting event entrance for customer " + customer.getId());
+
+            double serviceTime = getGenerator().sample();
+            getEventList().add(new Event(getScheduledEventType(), Clock.getInstance().getTime() + serviceTime));
+            currentCustomerCount++;
+            System.out.println("current count: " + currentCustomerCount);
+
+            if (currentCustomerCount == capacity) {
+                Trace.out(Trace.Level.INFO, "EventEntrance is full.");
+                setBusy(true);
+                break;
+            }
         }
+        for (Customer c : processing) {
+            this.addToQueue(c);
+        }
+
+
+
+
+
 
     }
 
