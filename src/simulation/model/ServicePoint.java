@@ -50,7 +50,7 @@ public class ServicePoint {
 	}
 
 	public boolean hasQueue(){
-		return queue.size() != 0;
+		return !queue.isEmpty();
 	}
 
 	public EventList getEventList() {
