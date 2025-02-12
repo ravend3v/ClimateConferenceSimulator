@@ -1,3 +1,4 @@
+// Refactor the clock class to focus on thread safety and lazy initialization (12.2.2025)
 package simulation.framework;
 
 public class Clock {
@@ -11,7 +12,11 @@ public class Clock {
 
 	public static Clock getInstance(){
 		if (instance == null){
-			instance = new Clock();
+			synchronized (Clock.class) {
+				if (instance == null) {
+					instance = new Clock();
+				}
+			}
 		}
 		return instance;
 	}
