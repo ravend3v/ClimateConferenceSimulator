@@ -4,8 +4,6 @@ import simulation.framework.*;
 import java.util.LinkedList;
 import eduni.distributions.ContinuousGenerator;
 
-// TODO:
-// Service point specific functionalities, calculations (+ necessary variables) and reporting to be coded
 public class ServicePoint {
 
 	private final LinkedList<Customer> queue = new LinkedList<>(); // Data structure implementation
@@ -15,7 +13,6 @@ public class ServicePoint {
   	protected int capacity;
   	protected int currentCustomerCount;
 
-	//QueueStrategy strategy; //option: customer order
 
 	private boolean busy = false;
 
@@ -38,11 +35,14 @@ public class ServicePoint {
 
 	public void startService(){  // Start a new service, the customer is in the queue during the service
 
-		Trace.out(Trace.Level.INFO, "Starting a new service for customer " + queue.peek().getId());
-
-		busy = true;
-		double serviceTime = generator.sample();
-		eventList.add(new Event(scheduledEventType, Clock.getInstance().getTime() + serviceTime));
+		// Check if there are customers in the queue and start service for the first customer
+		if (!queue.isEmpty()) {
+			Customer customer = queue.peek();
+			Trace.out(Trace.Level.INFO, "Starting a new service for customer " + customer.getId());
+			busy = true;
+			double serviceTime = generator.sample();
+			eventList.add(new Event(scheduledEventType, Clock.getInstance().getTime() + serviceTime));
+		}
 	}
 
 	public boolean isBusy(){
