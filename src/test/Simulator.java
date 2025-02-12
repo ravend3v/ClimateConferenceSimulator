@@ -9,7 +9,7 @@ public class Simulator {
 	public static void main(String[] args) {
 		Trace.setTraceLevel(Level.INFO);
 		Motor motor = new OwnMotor();
-		motor.setSimulationTime(1000);
+		motor.setSimulationTime(50);
 		motor.run();
 	}
 }

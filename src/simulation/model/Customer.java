@@ -10,10 +10,10 @@ public class Customer {
 	private int id;
 	private static int i = 1;
 	private static long sum = 0;
+	private static int completedCount = 0;
 
 	public Customer(){
 		id = i++;
-
 		arrivalTime = Clock.getInstance().getTime();
 		Trace.out(Trace.Level.INFO, "New customer no " + id + " arrived at "+ arrivalTime);
 	}
@@ -43,9 +43,14 @@ public class Customer {
 		Trace.out(Trace.Level.INFO, "Customer "+ id + " arrived: " + arrivalTime);
 		Trace.out(Trace.Level.INFO,"Customer "+ id + " exited: " + exitTime);
 		Trace.out(Trace.Level.INFO,"Customer "+ id + " stayed: " + (exitTime - arrivalTime));
-		sum += (exitTime - arrivalTime);
-		double average = sum / id;
+		sum += (long) (exitTime - arrivalTime);
+		double average = (double) sum / id;
 		System.out.println("Average throughput time of customers so far "+ average);
+		completedCount++;
+	}
+
+	public static int getCompletedCount() {
+		return completedCount;
 	}
 
 }

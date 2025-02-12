@@ -8,20 +8,29 @@ public class ServicePoint {
 
 	private final LinkedList<Customer> queue = new LinkedList<>(); // Data structure implementation
 	private final ContinuousGenerator generator;
+
 	private final EventList eventList;
 	private final EventType scheduledEventType;
+
+	private final Queue mainQueue;
+
   	protected int capacity;
   	protected int currentCustomerCount;
 
 
 	private boolean busy = false;
 
-	public ServicePoint(ContinuousGenerator generator, EventList eventList, EventType type, int capacity, int currentCustomerCount){
+	// adding new double for the result taking
+	private double busyTime;
+
+	public ServicePoint(ContinuousGenerator generator, EventList eventList, EventType type, int capacity, int currentCustomerCount, Queue mainQueue){
 		this.eventList = eventList;
 		this.generator = generator;
 		this.scheduledEventType = type;
 		this.capacity = capacity;
 		this.currentCustomerCount = currentCustomerCount;
+		this.busyTime = 0.0;
+		this.mainQueue = mainQueue;
 	}
 
 	public void addToQueue(Customer c){   // The first customer in the queue is always in service
@@ -29,8 +38,14 @@ public class ServicePoint {
 	}
 
 	public Customer removeFromQueue(){  // Remove the customer who was in service
-		busy = false;
-		return queue.poll();
+		// !! Note changing this for now !! //
+		Customer customer = queue.poll();
+		if (customer != null) {
+			busy = false;
+			double responseTime = customer.getExitTime() - customer.getArrivalTime();
+			mainQueue.addCompleted(responseTime);
+		}
+		return customer;
 	}
 
 	public void startService(){  // Start a new service, the customer is in the queue during the service
@@ -41,6 +56,7 @@ public class ServicePoint {
 			Trace.out(Trace.Level.INFO, "Starting a new service for customer " + customer.getId());
 			busy = true;
 			double serviceTime = generator.sample();
+			busyTime += serviceTime;
 			eventList.add(new Event(scheduledEventType, Clock.getInstance().getTime() + serviceTime));
 		}
 	}
@@ -88,4 +104,18 @@ public class ServicePoint {
 	public int getCurrentCustomerCount() {
 		return currentCustomerCount;
 	}
+
+	// Control the service point busy times
+	protected void addBusyTime(double time) {
+		this.busyTime += time;
+	}
+
+	public double getBusyTime() {
+		return busyTime;
+	}
+
+	public Queue getMainQueue() {
+		return mainQueue;
+	}
 }
+

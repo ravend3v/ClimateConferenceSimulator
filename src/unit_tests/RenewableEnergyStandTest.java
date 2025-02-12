@@ -19,8 +19,7 @@ public class RenewableEnergyStandTest {
         generator = new Uniform(1.0, 2.0);
         eventList = new EventList();
         eventType = EventType.TEST_EVENT;
-        renewableEnergyStand = new RenewableEnergyStand(generator, eventList, eventType, 5, 0);
-    }
+        renewableEnergyStand = new RenewableEnergyStand(generator, eventList, eventType, 5, 0, new Queue(new Negexp(1.0, (long) 1.0), eventList, eventType));    }
 
     @Test
     public void testAddToQueue() {
