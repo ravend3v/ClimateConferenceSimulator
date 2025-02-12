@@ -16,7 +16,7 @@ public class RenewableEnergyStandTest {
 
     @Before
     public void setUp() {
-        generator = new Uniform(1.0, 2.0); // Example generator
+        generator = new Uniform(1.0, 2.0);
         eventList = new EventList();
         eventType = EventType.TEST_EVENT;
         renewableEnergyStand = new RenewableEnergyStand(generator, eventList, eventType, 5, 0);
