@@ -1,4 +1,3 @@
-// src/simulation/model/RenewableEnergyStand.java
 package simulation.model;
 
 import simulation.framework.*;
@@ -11,10 +10,10 @@ import java.util.Set;
 
 public class RenewableEnergyStand extends ServicePoint {
     private final Set<Customer> processing = new HashSet<>();
-    private Map<Double,Customer> exitTimes = new HashMap<>();
+    private final Map<Double,Customer> exitTimes = new HashMap<>();
 
-    public RenewableEnergyStand(ContinuousGenerator generator, EventList eventList, EventType type, int capacity, int currentCustomerCount) {
-        super(generator, eventList, type, capacity, currentCustomerCount);
+    public RenewableEnergyStand(ContinuousGenerator generator, EventList eventList, EventType type, int capacity, int currentCustomerCount, Queue mainQueue) {
+        super(generator, eventList, type, capacity, currentCustomerCount, mainQueue);
     }
 
     @Override
@@ -22,6 +21,7 @@ public class RenewableEnergyStand extends ServicePoint {
         Customer c = null;
         double smallestTime = Double.MAX_VALUE;
 
+        // Iterate through exitTimes to find the customer with the smallest exit time
         for(Map.Entry<Double,Customer>entry: exitTimes.entrySet()){
             if(entry.getKey()<smallestTime){
                 smallestTime = entry.getKey();
@@ -35,8 +35,10 @@ public class RenewableEnergyStand extends ServicePoint {
             processing.remove(c);
             setBusy(false);
             currentCustomerCount--;
+            double responseTime = (c.getExitTime() - c.getArrivalTime());
+            getMainQueue().addCompleted(responseTime);
+            completedServices++;
         }
-
         return c;
     }
 
@@ -53,6 +55,8 @@ public class RenewableEnergyStand extends ServicePoint {
             Trace.out(Trace.Level.INFO, "Starting renewable energy stand for customer " + customer.getId());
 
             double serviceTime = getGenerator().sample();
+            addBusyTime(serviceTime);
+
             getEventList().add(new Event(getScheduledEventType(), Clock.getInstance().getTime() + serviceTime));
             exitTimes.put(Clock.getInstance().getTime() + serviceTime,customer);
             currentCustomerCount++;

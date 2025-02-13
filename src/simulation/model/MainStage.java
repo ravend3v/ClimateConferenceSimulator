@@ -1,9 +1,6 @@
 package simulation.model;
 
-import simulation.framework.Clock;
-import simulation.framework.Event;
-import simulation.framework.EventList;
-import simulation.framework.Trace;
+import simulation.framework.*;
 import eduni.distributions.ContinuousGenerator;
 
 import java.util.HashMap;
@@ -15,8 +12,8 @@ public class MainStage extends ServicePoint {
     private Set<Customer> processing = new HashSet<>();
     private Map<Double,Customer> exitTimes = new HashMap<>();
 
-    public MainStage(ContinuousGenerator generator, EventList eventList, EventType eventType, int capacity, int currentCustomerCount) {
-        super(generator, eventList, eventType, capacity, currentCustomerCount);
+    public MainStage(ContinuousGenerator generator, EventList eventList, EventType eventType, int capacity, int currentCustomerCount, Queue mainQueue) {
+        super(generator, eventList, eventType, capacity, currentCustomerCount, mainQueue);
     }
 
     @Override
@@ -37,6 +34,9 @@ public class MainStage extends ServicePoint {
             processing.remove(c);
             setBusy(false);
             currentCustomerCount--;
+            double responseTime = (c.getExitTime() - c.getArrivalTime());
+            getMainQueue().addCompleted(responseTime);
+            completedServices++;
         }
 
         return c;
@@ -60,6 +60,8 @@ public class MainStage extends ServicePoint {
             Trace.out(Trace.Level.INFO, "Starting main stage for customer " + customer.getId());
 
             double serviceTime = getGenerator().sample();
+            addBusyTime(serviceTime);
+
             getEventList().add(new Event(getScheduledEventType(), Clock.getInstance().getTime() + serviceTime));
             exitTimes.put(Clock.getInstance().getTime() + serviceTime,customer);
             currentCustomerCount++;

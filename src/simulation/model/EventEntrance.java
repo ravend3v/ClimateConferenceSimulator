@@ -2,15 +2,16 @@ package simulation.model;
 
 import eduni.distributions.ContinuousGenerator;
 import simulation.framework.*;
+import simulation.framework.Queue;
 
 import java.util.*;
 
 public class EventEntrance extends ServicePoint{
     private final Set<Customer> processing = new HashSet<>();
-    private Map<Double,Customer> exitTimes = new HashMap<>();
+    private final Map<Double,Customer> exitTimes = new HashMap<>();
 
-    public EventEntrance(ContinuousGenerator generator, EventList eventList, EventType type, int capacity, int currentCustomerCount){
-        super(generator,eventList,type, capacity, currentCustomerCount);
+    public EventEntrance(ContinuousGenerator generator, EventList eventList, EventType type, int capacity, int currentCustomerCount, Queue mainQueue){
+        super(generator,eventList,type, capacity, currentCustomerCount, mainQueue);
     }
 
     @Override
@@ -32,6 +33,9 @@ public class EventEntrance extends ServicePoint{
             processing.remove(c);
             setBusy(false);
             currentCustomerCount--;
+            double responseTime = (c.getExitTime() - c.getArrivalTime());
+            getMainQueue().addCompleted(responseTime);
+            completedServices++;
         }
 
         return c;
@@ -55,6 +59,8 @@ public class EventEntrance extends ServicePoint{
             Trace.out(Trace.Level.INFO, "Starting event entrance for customer " + customer.getId());
 
             double serviceTime = getGenerator().sample();
+            addBusyTime(serviceTime);
+
             getEventList().add(new Event(getScheduledEventType(), Clock.getInstance().getTime() + serviceTime));
             exitTimes.put(Clock.getInstance().getTime() + serviceTime,customer);
             currentCustomerCount++;

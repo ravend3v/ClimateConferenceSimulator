@@ -11,20 +11,10 @@ import java.util.Set;
 
 public class ClimateShowcaseRoom extends ServicePoint {
     private final Set<Customer> processing = new HashSet<>();
-    private Map<Double,Customer> exitTimes = new HashMap<>();
+    private final Map<Double,Customer> exitTimes = new HashMap<>();
 
-    public ClimateShowcaseRoom(ContinuousGenerator generator, EventList eventList, EventType type, int capacity, int currentCustomerCount) {
-        super(generator, eventList, type, capacity, currentCustomerCount);
-    }
-
-    @Override
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
-    @Override
-    public void setCurrentCustomerCount(int currentCustomerCount) {
-        this.currentCustomerCount = currentCustomerCount;
+    public ClimateShowcaseRoom(ContinuousGenerator generator, EventList eventList, EventType type, int capacity, int currentCustomerCount, Queue mainQueue) {
+        super(generator, eventList, type, capacity, currentCustomerCount, mainQueue);
     }
 
     @Override
@@ -45,6 +35,9 @@ public class ClimateShowcaseRoom extends ServicePoint {
             processing.remove(c);
             setBusy(false);
             currentCustomerCount--;
+            double responseTime = (c.getExitTime() - c.getArrivalTime());
+            getMainQueue().addCompleted(responseTime);
+            completedServices++;
         }
 
         return c;
@@ -63,6 +56,8 @@ public class ClimateShowcaseRoom extends ServicePoint {
             Trace.out(Trace.Level.INFO, "Starting climate showcase room for customer " + customer.getId());
 
             double serviceTime = getGenerator().sample();
+            addBusyTime(serviceTime);
+
             getEventList().add(new Event(getScheduledEventType(), Clock.getInstance().getTime() + serviceTime));
             exitTimes.put(Clock.getInstance().getTime() + serviceTime,customer);
             currentCustomerCount++;
