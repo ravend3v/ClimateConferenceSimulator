@@ -37,6 +37,7 @@ public class ClimateShowcaseRoom extends ServicePoint {
             currentCustomerCount--;
             double responseTime = (c.getExitTime() - c.getArrivalTime());
             getMainQueue().addCompleted(responseTime);
+            completedServices++;
         }
 
         return c;

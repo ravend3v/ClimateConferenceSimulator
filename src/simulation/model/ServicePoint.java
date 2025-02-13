@@ -22,6 +22,7 @@ public class ServicePoint {
 
 	// adding new double for the result taking
 	private double busyTime;
+	protected int completedServices;
 
 	public ServicePoint(ContinuousGenerator generator, EventList eventList, EventType type, int capacity, int currentCustomerCount, Queue mainQueue){
 		this.eventList = eventList;
@@ -116,6 +117,10 @@ public class ServicePoint {
 
 	public Queue getMainQueue() {
 		return mainQueue;
+	}
+
+	public int getCompletedServices(){
+		return completedServices;
 	}
 }
 

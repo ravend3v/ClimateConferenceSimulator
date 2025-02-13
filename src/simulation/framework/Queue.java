@@ -26,7 +26,7 @@ public class Queue {
     public void generateNext() {
         Event event = new Event(type, Clock.getInstance().getTime() + generator.sample());
         eventList.add(event);
-        arrivalCount++;
+        //arrivalCount++;
     }
 
     // Method to add a completed event and update the cumulative response time
@@ -38,6 +38,10 @@ public class Queue {
     // Getter for the arrival count
     public int getArrivalCount() {
         return arrivalCount;
+    }
+
+    public void addArrival(){
+        arrivalCount++;
     }
 
     // Getter for the completed count
