@@ -3,9 +3,7 @@ package simulation.framework;
 public abstract class Motor {
 
     private double simulationTime = 0;
-
-    private Clock clock;
-
+    private final Clock clock;
     protected EventList eventList;
 
     public Motor() {
@@ -29,6 +27,8 @@ public abstract class Motor {
 
             Trace.out(Trace.Level.INFO, "\nPhase C:");
             tryCEvents();
+
+            updateUI(currentTime());
         }
         results();
     }
@@ -51,4 +51,9 @@ public abstract class Motor {
     protected abstract void tryCEvents(); // Defined in the simulation.model package in the Motor subclass
     protected abstract void initialize(); // Defined in the simulation.model package in the Motor subclass
     protected abstract void results(); // Defined in the simulation.model package in the Motor subclass
+
+    // Method to update the UI with the current simulation time
+    protected void updateUI(double time) {
+        // Override this method in the subclasses to update UI
+    }
 }
