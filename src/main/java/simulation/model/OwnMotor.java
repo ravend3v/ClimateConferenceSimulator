@@ -15,7 +15,7 @@ public class OwnMotor extends Motor {
 
 	private Queue queue;
 	private ServicePoint[] servicePoints;
-	private ServicePointView[] servicePointViews;
+	protected ServicePointView[] servicePointViews;
 	private Map<Integer, CustomerView> customerViews;
 
 	public OwnMotor(ServicePointView[] servicePointViews) {
@@ -149,4 +149,6 @@ public class OwnMotor extends Motor {
 	protected void updateUI(double time) {
 		System.out.println("Simulation time: " + time);
 	}
+
+
 }
