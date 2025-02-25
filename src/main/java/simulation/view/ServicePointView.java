@@ -18,7 +18,9 @@ public class ServicePointView extends VBox {
     }
 
     public void addCustomerView(CustomerView customerView) {
-        queueBox.getChildren().add(customerView);
+        if (queueBox.getChildren().size() < (int) getUserData()) { // Max 8 palloa per laatikko
+            queueBox.getChildren().add(customerView);
+        }
     }
 
     public void removeCustomerView(CustomerView customerView) {
