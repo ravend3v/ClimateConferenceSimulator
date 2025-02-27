@@ -27,7 +27,7 @@ public class Controller implements IControllerM,IControllerV{
     @Override
     public void startSimulation(double time,int[] capacities){
 
-        motor = new OwnMotor(this,capacities);
+        motor = new OwnMotor(this,capacities,getAllServicePointViews());
         motor.setSimulationTime(time);
         new Thread(() -> {
             motor.run();
@@ -71,6 +71,14 @@ public class Controller implements IControllerM,IControllerV{
             case 3 -> ui.getMainStage();
             default -> throw new IllegalArgumentException("Invalid service point index: " + servicePointIndex);
         };
+    }
+
+    public ServicePointView[] getAllServicePointViews(){
+        ServicePointView[] servicePointViews = {ui.getEventEntrance(),
+                                                ui.getRenewable(),
+                                                ui.getShowRoom(),
+                                                ui.getMainStage()};
+        return servicePointViews;
     }
 
 

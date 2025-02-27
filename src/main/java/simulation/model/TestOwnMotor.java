@@ -3,7 +3,7 @@ package simulation.model;
 
 import simulation.controller.IControllerM;
 import simulation.view.ServicePointView;
-
+/*
 public class TestOwnMotor extends OwnMotor{
     public TestOwnMotor(IControllerM controller) {
         super(controller, new int[4]);
@@ -12,3 +12,5 @@ public class TestOwnMotor extends OwnMotor{
         }
     }
 }
+
+ */

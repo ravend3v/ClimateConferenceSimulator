@@ -1,7 +1,7 @@
 package simulation.framework;
 import simulation.controller.IControllerM;
 
-public abstract class Motor implements IMotor{
+public abstract class Motor extends Thread implements IMotor{
 
     private double simulationTime = 0;
     private final Clock clock;

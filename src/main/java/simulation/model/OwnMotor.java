@@ -14,12 +14,11 @@ public class OwnMotor extends Motor {
 	private final ServicePoint[] servicePoints;
 	private final ServicePointView[] servicePointViews;
 
-    public OwnMotor(IControllerM controller,int[] capacities) {
+    public OwnMotor(IControllerM controller,int[] capacities,ServicePointView[] servicePointViews) {
 		super(controller);
         this.queue = new Queue(new Negexp(5, 5), eventList, EventType.ARR1);
-		this.servicePointViews = new ServicePointView[capacities.length];
-
-        servicePoints = new ServicePoint[4];
+		this.servicePointViews = servicePointViews;
+		servicePoints = new ServicePoint[4];
 
 		servicePoints[0] = new EventEntrance(new Normal(10, 10), eventList, EventType.DEP1, capacities[0], 0, queue);
 		servicePoints[1] = new RenewableEnergyStand(new Normal(10, 10), eventList, EventType.DEP2, capacities[1], 0, queue);
@@ -38,7 +37,17 @@ public class OwnMotor extends Motor {
 
 	@Override
 	protected void initialize() {
-		queue.generateNext();
+		Clock.getInstance().setTime(0);
+
+		//queue.generateNext();
+		double firstEventTime = Clock.getInstance().getTime() + 1; // Ensure the first event is within the simulation time
+		if (firstEventTime > Clock.getInstance().getTime() + 1000) {
+			firstEventTime = Clock.getInstance().getTime() + 1; // Adjust to ensure it is within the simulation time
+		}
+		Event firstEvent = new Event(EventType.ARR1, firstEventTime);
+		eventList.add(firstEvent);
+		System.out.println("Adding new event to the list " + firstEvent.getType() + " " + firstEvent.getTime());
+		System.out.println("initialized properly!");
 	}
 
 	@Override
@@ -50,6 +59,7 @@ public class OwnMotor extends Motor {
 				customer = new Customer();
 				servicePoints[0].addToQueue(customer);
 				controller.showNewCustomer(customer.getId());
+				System.out.println("arr1: "+customer.getId());
 				queue.generateNext();
 				queue.addArrival();
 				break;
@@ -59,18 +69,24 @@ public class OwnMotor extends Motor {
 				controller.showCustomer(customer.getId(), 0,1);
 				customer.setExitTime(Clock.getInstance().getTime());
 				servicePoints[1].addToQueue(customer);
+				System.out.println("dep1: "+customer.getId());
+
 				break;
 			case DEP2:
 				customer = servicePoints[1].removeFromQueue();
 				controller.showCustomer(customer.getId(), 1,2);
 				customer.setExitTime(Clock.getInstance().getTime());
 				servicePoints[2].addToQueue(customer);
+				System.out.println("dep2: "+customer.getId());
+
 				break;
 			case DEP3:
 				customer = servicePoints[2].removeFromQueue();
 				controller.showCustomer(customer.getId(), 2,3);
 				customer.setExitTime(Clock.getInstance().getTime());
 				servicePoints[3].addToQueue(customer);
+				System.out.println("dep3: "+customer.getId());
+
 				break;
 			case DEP4:
 				customer = servicePoints[3].removeFromQueue();
@@ -78,6 +94,8 @@ public class OwnMotor extends Motor {
 				customer.setExitTime(Clock.getInstance().getTime());
 				customer.report();
 				queue.addCompleted(customer.getExitTime() - customer.getArrivalTime());
+				System.out.println("exit: "+customer.getId());
+
 				break;
 			default:
 				break;
@@ -88,6 +106,7 @@ public class OwnMotor extends Motor {
 	protected void tryCEvents() {
 		for (ServicePoint p : servicePoints) {
 			if (!p.isBusy() && p.hasQueue()) {
+				System.out.println("pöö");
 				p.startService();
 			}
 		}

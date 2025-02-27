@@ -13,10 +13,11 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import simulation.controller.Controller;
+import simulation.controller.IControllerV;
 import simulation.model.OwnMotor;
 
 public class SimulationGUI extends Application implements ISimulationUI {
-
+    private IControllerV controller;
     ServicePointView[] servicePointViews = new ServicePointView[4];
     Label statusLabel = new Label();
 
@@ -137,6 +138,9 @@ public class SimulationGUI extends Application implements ISimulationUI {
         primaryStage.setMaximized(true);
         primaryStage.show();
 
+        controller = new Controller(this, this);
+
+
         // Button functionality
         startButton.setOnAction(e -> {
             try {
@@ -145,24 +149,13 @@ public class SimulationGUI extends Application implements ISimulationUI {
                 for (int i = 0; i < numberDropdowns.length; i++) {
                     capacities[i] = numberDropdowns[i].getValue();
                 }
-                startSimulation(duration, capacities);
+                controller.startSimulation(duration, capacities);
             } catch (NumberFormatException ex) {
                 statusLabel.setText("Enter a valid number!");
             }
         });
     }
 
-    // Start simulation
-    private void startSimulation(double duration, int[] capacities) {
-        Controller controller = new Controller(this, this);
-        OwnMotor motor = new OwnMotor(controller, capacities);
-        motor.setSimulationTime(duration);
-
-        new Thread(() -> {
-            motor.run();
-            Platform.runLater(() -> statusLabel.setText("Simulation Completed!"));
-        }).start();
-    }
 
     // Service Point component styles
     private ServicePointView createStyledServicePoint(String name, String color) {
