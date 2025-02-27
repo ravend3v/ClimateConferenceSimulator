@@ -1,4 +1,5 @@
 package simulation.controller;
+
 import javafx.application.Platform;
 import simulation.framework.IMotor;
 import simulation.model.OwnMotor;
@@ -7,6 +8,7 @@ import simulation.view.ISimulationUI;
 import simulation.view.ServicePointView;
 import simulation.view.SimulationGUI;
 
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -14,12 +16,12 @@ public class Controller implements IControllerM,IControllerV{
     private IMotor motor;
     private ISimulationUI ui;
     private SimulationGUI gui;
-    //protected ServicePointView[] servicePointViews;
     private Map<Integer, CustomerView> customerViews;
 
     public Controller(ISimulationUI ui, SimulationGUI gui){
         this.ui = ui;
         this.gui = gui;
+        this.customerViews = new HashMap<>();
     }
 
     @Override
@@ -62,18 +64,13 @@ public class Controller implements IControllerM,IControllerV{
     }
 
     private ServicePointView getServicePointView(int servicePointIndex) {
-        switch (servicePointIndex) {
-            case 0:
-                return ui.getEventEntrance();
-            case 1:
-                return ui.getRenewable();
-            case 2:
-                return ui.getShowRoom();
-            case 3:
-                return ui.getMainStage();
-            default:
-                throw new IllegalArgumentException("Invalid service point index: " + servicePointIndex);
-        }
+        return switch (servicePointIndex) {
+            case 0 -> ui.getEventEntrance();
+            case 1 -> ui.getRenewable();
+            case 2 -> ui.getShowRoom();
+            case 3 -> ui.getMainStage();
+            default -> throw new IllegalArgumentException("Invalid service point index: " + servicePointIndex);
+        };
     }
 
 

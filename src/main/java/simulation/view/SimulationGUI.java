@@ -13,27 +13,18 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import simulation.controller.Controller;
-import simulation.controller.IControllerV;
 import simulation.model.OwnMotor;
 
-
-public class SimulationGUI extends Application implements ISimulationUI{
+public class SimulationGUI extends Application implements ISimulationUI {
 
     ServicePointView[] servicePointViews = new ServicePointView[4];
-    Label statusLabel = new Label("Simulation not started");
-    private IControllerV controller;
-
-
-
-    public void updateStatusLabel(String message) {
-        Platform.runLater(() -> statusLabel.setText(message));
-    }
+    Label statusLabel = new Label();
 
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Climate Conference Simulator");
 
-        // Tyylit
+        // Styles
         String buttonStyle = "-fx-background-color: linear-gradient(to right, #007bff, #0056b3); "
                 + "-fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 12px 20px; "
                 + "-fx-border-radius: 12px; -fx-background-radius: 12px; -fx-cursor: hand;";
@@ -41,7 +32,7 @@ public class SimulationGUI extends Application implements ISimulationUI{
         String textFieldStyle = "-fx-background-color: #ffffff; -fx-border-color: #cccccc; "
                 + "-fx-border-radius: 10px; -fx-padding: 8px; -fx-font-size: 14px;";
 
-        // Simulaation keston syöttökenttä
+        // Simulation duration input field
         Label durationLabel = new Label("Simulation Duration:");
         durationLabel.setFont(new Font(16));
 
@@ -50,10 +41,7 @@ public class SimulationGUI extends Application implements ISimulationUI{
         durationField.setMaxWidth(200);
         durationField.setStyle(textFieldStyle);
 
-        VBox searchBox = new VBox(10, durationLabel, durationField);
-        searchBox.setAlignment(Pos.CENTER);
-
-        // kapasiteetti valikot
+        // Capacity dropdowns
         ComboBox<Integer>[] numberDropdowns = new ComboBox[4];
         Label[] dropdownLabels = new Label[4];
         String[] serviceNames = {
@@ -66,9 +54,9 @@ public class SimulationGUI extends Application implements ISimulationUI{
         for (int i = 0; i < numberDropdowns.length; i++) {
             numberDropdowns[i] = new ComboBox<>();
             for (int j = 1; j <= 10; j++) {
-                numberDropdowns[i].getItems().add(j); // Lisää numerot 1-10
+                numberDropdowns[i].getItems().add(j); // Add numbers 1-10
             }
-            numberDropdowns[i].setValue(1); // Aseta oletusarvoksi 1
+            numberDropdowns[i].setValue(1); // Set default value to 1
             dropdownLabels[i] = new Label(serviceNames[i]);
             dropdownLabels[i].setFont(new Font(16));
         }
@@ -89,7 +77,6 @@ public class SimulationGUI extends Application implements ISimulationUI{
         numberDropdownBox4.setAlignment(Pos.CENTER);
         numberDropdownBox4.getChildren().addAll(dropdownLabels[3], numberDropdowns[3]);
 
-
         VBox numberDropdownBox = new VBox(10);
         numberDropdownBox.setAlignment(Pos.CENTER);
         numberDropdownBox.getChildren().addAll(
@@ -99,8 +86,10 @@ public class SimulationGUI extends Application implements ISimulationUI{
                 numberDropdownBox4
         );
 
+        VBox searchBox = new VBox(10, durationLabel, durationField);
+        searchBox.setAlignment(Pos.CENTER);
 
-        // Start Simulation -nappi
+        // Start Simulation button
         Button startButton = new Button("Start Simulation");
         startButton.setFont(new Font(14));
         startButton.setStyle(buttonStyle);
@@ -108,17 +97,17 @@ public class SimulationGUI extends Application implements ISimulationUI{
         VBox buttonBox = new VBox(10, startButton);
         buttonBox.setAlignment(Pos.CENTER);
 
-        // Service Point -näkymät (kiinteä koko, ei venymistä)
+        // Service Point views (fixed size, no stretching)
         servicePointViews[0] = createStyledServicePoint("Event Entrance", "#42a5f5");
         servicePointViews[1] = createStyledServicePoint("Renewable Energy Stand", "#66bb6a");
         servicePointViews[2] = createStyledServicePoint("Climate Showcase Room", "#ffa726");
         servicePointViews[3] = createStyledServicePoint("Main Stage", "#ab47bc");
 
-// Estetään venyminen
+        // Prevent stretching
         for (ServicePointView spv : servicePointViews) {
-            spv.setMaxSize(200, 150); // Maksimikoko
-            spv.setPrefSize(200, 150); // Asetetaan kiinteä koko
-            spv.setMinSize(200, 150); // Minimikoko, estää pienenemisenkin
+            spv.setMaxSize(200, 150); // Max size
+            spv.setPrefSize(200, 150); // Fixed size
+            spv.setMinSize(200, 150); // Min size, prevents shrinking
         }
 
         GridPane serviceGrid = new GridPane();
@@ -131,16 +120,16 @@ public class SimulationGUI extends Application implements ISimulationUI{
         serviceGrid.add(servicePointViews[2], 0, 1);
         serviceGrid.add(servicePointViews[3], 1, 1);
 
-        // Päälayout
+        // Main layout
         VBox layout = new VBox(30);
         layout.setAlignment(Pos.CENTER);
         layout.setStyle("-fx-padding: 50px; -fx-background-color: #f4f4f4;");
-        layout.getChildren().addAll(searchBox, numberDropdownBox,buttonBox, statusLabel, serviceGrid);
+        layout.getChildren().addAll(searchBox, numberDropdownBox, buttonBox, statusLabel, serviceGrid);
 
         StackPane root = new StackPane(layout);
         StackPane.setAlignment(layout, Pos.CENTER);
 
-        // Scene ja ikkuna-asetukset
+        // Scene and window settings
         Scene scene = new Scene(root, 1000, 700);
         primaryStage.setScene(scene);
         primaryStage.setMinWidth(800);
@@ -148,7 +137,7 @@ public class SimulationGUI extends Application implements ISimulationUI{
         primaryStage.setMaximized(true);
         primaryStage.show();
 
-        // Napin toiminnallisuus
+        // Button functionality
         startButton.setOnAction(e -> {
             try {
                 double duration = Double.parseDouble(durationField.getText());
@@ -156,15 +145,26 @@ public class SimulationGUI extends Application implements ISimulationUI{
                 for (int i = 0; i < numberDropdowns.length; i++) {
                     capacities[i] = numberDropdowns[i].getValue();
                 }
-                controller.startSimulation(duration, capacities);
+                startSimulation(duration, capacities);
             } catch (NumberFormatException ex) {
                 statusLabel.setText("Enter a valid number!");
             }
         });
     }
 
+    // Start simulation
+    private void startSimulation(double duration, int[] capacities) {
+        Controller controller = new Controller(this, this);
+        OwnMotor motor = new OwnMotor(controller, capacities);
+        motor.setSimulationTime(duration);
 
-    // Service Point -komponenttien tyylit
+        new Thread(() -> {
+            motor.run();
+            Platform.runLater(() -> statusLabel.setText("Simulation Completed!"));
+        }).start();
+    }
+
+    // Service Point component styles
     private ServicePointView createStyledServicePoint(String name, String color) {
         ServicePointView spv = new ServicePointView(name);
         spv.setStyle("-fx-background-color: " + color + "; " +
@@ -172,41 +172,49 @@ public class SimulationGUI extends Application implements ISimulationUI{
                 "-fx-border-radius: 15px; -fx-background-radius: 15px; " +
                 "-fx-font-size: 14px; -fx-text-fill: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 3, 3);");
 
-        // Estetään liiallinen määrä asiakkaita
-        spv.setMaxHeight(150); // Rajoittaa korkeutta
-        spv.setMinHeight(150); // Ei veny
-        spv.setMaxWidth(200); // Rajoittaa leveyttä
+        // Prevent excessive number of customers
+        spv.setMaxHeight(150); // Limit height
+        spv.setMinHeight(150); // Prevent shrinking
+        spv.setMaxWidth(200); // Limit width
         spv.setMinWidth(200);
 
-        // Lisätään max 8 palloa per laatikko
+        // Add max 8 balls per box
         spv.setUserData(5);
 
         return spv;
     }
 
-    public ServicePointView getEventEntrance(){
+    // Method to update the status label
+    public void updateStatusLabel(String message) {
+        Platform.runLater(() -> statusLabel.setText(message));
+    }
+
+    @Override
+    public ServicePointView getEventEntrance() {
         return servicePointViews[0];
     }
 
-    public ServicePointView getRenewable(){
+    @Override
+    public ServicePointView getRenewable() {
         return servicePointViews[1];
     }
 
-    public ServicePointView getShowRoom(){
+    @Override
+    public ServicePointView getShowRoom() {
         return servicePointViews[2];
     }
 
-    public ServicePointView getMainStage(){
+    @Override
+    public ServicePointView getMainStage() {
         return servicePointViews[3];
     }
 
-    public CustomerView getCustomer(int id){
+    @Override
+    public CustomerView getCustomer(int id) {
         return new CustomerView(id);
     }
 
-   /* public static void main(String[] args) {
+    public static void main(String[] args) {
         launch(args);
     }
-
-    */
 }
