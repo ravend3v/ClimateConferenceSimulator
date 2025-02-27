@@ -1,5 +1,4 @@
-/*
-package simulation;
+package simulation.view;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -13,13 +12,22 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import simulation.controller.Controller;
+import simulation.controller.IControllerV;
 import simulation.model.OwnMotor;
-import simulation.view.ServicePointView;
 
-public class SimulationApp extends Application {
+
+public class SimulationGUI extends Application implements ISimulationUI{
 
     ServicePointView[] servicePointViews = new ServicePointView[4];
     Label statusLabel = new Label("Simulation not started");
+    private IControllerV controller;
+
+
+
+    public void updateStatusLabel(String message) {
+        Platform.runLater(() -> statusLabel.setText(message));
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -41,6 +49,9 @@ public class SimulationApp extends Application {
         durationField.setPromptText("Enter time...");
         durationField.setMaxWidth(200);
         durationField.setStyle(textFieldStyle);
+
+        VBox searchBox = new VBox(10, durationLabel, durationField);
+        searchBox.setAlignment(Pos.CENTER);
 
         // kapasiteetti valikot
         ComboBox<Integer>[] numberDropdowns = new ComboBox[4];
@@ -88,9 +99,6 @@ public class SimulationApp extends Application {
                 numberDropdownBox4
         );
 
-
-        VBox searchBox = new VBox(10, durationLabel, durationField);
-        searchBox.setAlignment(Pos.CENTER);
 
         // Start Simulation -nappi
         Button startButton = new Button("Start Simulation");
@@ -144,23 +152,17 @@ public class SimulationApp extends Application {
         startButton.setOnAction(e -> {
             try {
                 double duration = Double.parseDouble(durationField.getText());
-                startSimulation(duration);
+                int[] capacities = new int[numberDropdowns.length];
+                for (int i = 0; i < numberDropdowns.length; i++) {
+                    capacities[i] = numberDropdowns[i].getValue();
+                }
+                controller.startSimulation(duration, capacities);
             } catch (NumberFormatException ex) {
                 statusLabel.setText("Enter a valid number!");
             }
         });
     }
 
-    // Simulaation käynnistys
-    private void startSimulation(double duration) {
-        OwnMotor motor = new OwnMotor(servicePointViews);
-        motor.setSimulationTime(duration);
-
-        new Thread(() -> {
-            motor.run();
-            Platform.runLater(() -> statusLabel.setText("Simulation Completed!"));
-        }).start();
-    }
 
     // Service Point -komponenttien tyylit
     private ServicePointView createStyledServicePoint(String name, String color) {
@@ -182,9 +184,29 @@ public class SimulationApp extends Application {
         return spv;
     }
 
-    public static void main(String[] args) {
+    public ServicePointView getEventEntrance(){
+        return servicePointViews[0];
+    }
+
+    public ServicePointView getRenewable(){
+        return servicePointViews[1];
+    }
+
+    public ServicePointView getShowRoom(){
+        return servicePointViews[2];
+    }
+
+    public ServicePointView getMainStage(){
+        return servicePointViews[3];
+    }
+
+    public CustomerView getCustomer(int id){
+        return new CustomerView(id);
+    }
+
+   /* public static void main(String[] args) {
         launch(args);
     }
-}
-*/
 
+    */
+}

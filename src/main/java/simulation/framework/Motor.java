@@ -1,21 +1,26 @@
 package simulation.framework;
+import simulation.controller.IControllerM;
 
-public abstract class Motor {
+public abstract class Motor implements IMotor{
 
     private double simulationTime = 0;
     private final Clock clock;
     protected EventList eventList;
+    protected IControllerM controller;
 
-    public Motor() {
+    public Motor(IControllerM controller) {
+        this.controller = controller;
         clock = Clock.getInstance(); // Take the clock variable to simplify the code
         eventList = new EventList();
         // Service points are created in the simulation.model package in the Motor subclass
     }
 
+    @Override
     public void setSimulationTime(double time) {
         simulationTime = time;
     }
 
+    @Override
     public void run() {
         initialize(); // Create the first event, among other things
         while (isSimulating()) {
@@ -30,6 +35,7 @@ public abstract class Motor {
 
             updateUI(currentTime());
         }
+        controller.updateStatusLabel("Simulation Completed!");
         results();
     }
 

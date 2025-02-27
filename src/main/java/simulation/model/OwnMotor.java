@@ -2,6 +2,7 @@
 package simulation.model;
 
 import javafx.application.Platform;
+import simulation.controller.IControllerM;
 import simulation.framework.*;
 import simulation.view.CustomerView;
 import simulation.view.ServicePointView;
@@ -10,24 +11,27 @@ import eduni.distributions.Normal;
 import utils.NumberUtils;
 import java.util.HashMap;
 import java.util.Map;
+import simulation.controller.IControllerM;
 
 public class OwnMotor extends Motor {
 
 	private Queue queue;
 	private ServicePoint[] servicePoints;
-	protected ServicePointView[] servicePointViews;
-	private Map<Integer, CustomerView> customerViews;
+	//protected ServicePointView[] servicePointViews;
+	//private Map<Integer, CustomerView> customerViews;
 
-	public OwnMotor(ServicePointView[] servicePointViews) {
+	public OwnMotor(IControllerM controller,int[] capacities) {
+		super(controller);
 		this.queue = new Queue(new Negexp(5, 5), eventList, EventType.ARR1);
-		this.servicePointViews = servicePointViews;
-		this.customerViews = new HashMap<>();
+		//this.servicePointViews = servicePointViews;
+		//this.customerViews = new HashMap<>();
+
 		servicePoints = new ServicePoint[4];
 
-		servicePoints[0] = new EventEntrance(new Normal(10, 10), eventList, EventType.DEP1, 2, 0, queue);
-		servicePoints[1] = new RenewableEnergyStand(new Normal(10, 10), eventList, EventType.DEP2, 4, 0, queue);
-		servicePoints[2] = new ClimateShowcaseRoom(new Normal(5, 3), eventList, EventType.DEP3, 5, 0, queue);
-		servicePoints[3] = new MainStage(new Normal(5, 3), eventList, EventType.DEP4, 10, 0, queue);
+		servicePoints[0] = new EventEntrance(new Normal(10, 10), eventList, EventType.DEP1, capacities[0], 0, queue);
+		servicePoints[1] = new RenewableEnergyStand(new Normal(10, 10), eventList, EventType.DEP2, capacities[1], 0, queue);
+		servicePoints[2] = new ClimateShowcaseRoom(new Normal(5, 3), eventList, EventType.DEP3, capacities[2], 0, queue);
+		servicePoints[3] = new MainStage(new Normal(5, 3), eventList, EventType.DEP4, capacities[3], 0, queue);
 	}
 
 	@Override
@@ -44,47 +48,32 @@ public class OwnMotor extends Motor {
 			case ARR1:
 				customer = new Customer();
 				servicePoints[0].addToQueue(customer);
-				customerView = new CustomerView(customer.getId());
-				customerViews.put(customer.getId(), customerView);
-				Platform.runLater(() -> servicePointViews[0].addCustomerView(customerView));
+				controller.showNewCustomer(customer.getId());
 				queue.generateNext();
 				queue.addArrival();
 				break;
 			case DEP1:
 				queue.addArrival();
 				customer = servicePoints[0].removeFromQueue();
-				customerView = customerViews.get(customer.getId());
-				Platform.runLater(() -> {
-					servicePointViews[0].removeCustomerView(customerView);
-					servicePointViews[1].addCustomerView(customerView);
-				});
+				controller.showCustomer(customer.getId(), 0,1);
 				customer.setExitTime(Clock.getInstance().getTime());
 				servicePoints[1].addToQueue(customer);
 				break;
 			case DEP2:
 				customer = servicePoints[1].removeFromQueue();
-				customerView = customerViews.get(customer.getId());
-				Platform.runLater(() -> {
-					servicePointViews[1].removeCustomerView(customerView);
-					servicePointViews[2].addCustomerView(customerView);
-				});
+				controller.showCustomer(customer.getId(), 1,2);
 				customer.setExitTime(Clock.getInstance().getTime());
 				servicePoints[2].addToQueue(customer);
 				break;
 			case DEP3:
 				customer = servicePoints[2].removeFromQueue();
-				customerView = customerViews.get(customer.getId());
-				Platform.runLater(() -> {
-					servicePointViews[2].removeCustomerView(customerView);
-					servicePointViews[3].addCustomerView(customerView);
-				});
+				controller.showCustomer(customer.getId(), 2,3);
 				customer.setExitTime(Clock.getInstance().getTime());
 				servicePoints[3].addToQueue(customer);
 				break;
 			case DEP4:
 				customer = servicePoints[3].removeFromQueue();
-				customerView = customerViews.get(customer.getId());
-				Platform.runLater(() -> servicePointViews[3].removeCustomerView(customerView));
+				controller.customerExit(customer.getId());
 				customer.setExitTime(Clock.getInstance().getTime());
 				customer.report();
 				queue.addCompleted(customer.getExitTime() - customer.getArrivalTime());
@@ -105,6 +94,7 @@ public class OwnMotor extends Motor {
 
 	@Override
 	protected void results() {
+
 		double totalTime = Clock.getInstance().getTime();
 
 		int arrivedClientsCount = Customer.arrivedCount();

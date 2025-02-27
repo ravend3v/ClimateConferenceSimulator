@@ -1,6 +1,6 @@
 // This file exists to avoid issues when running the tests for the terminal based components
 package simulation.model;
-
+/*
 import simulation.view.ServicePointView;
 
 public class TestOwnMotor extends OwnMotor{
@@ -10,4 +10,4 @@ public class TestOwnMotor extends OwnMotor{
             servicePointViews[i] = new ServicePointView("ServicePoint " + (i + 1));
         }
     }
-}
+}*/
