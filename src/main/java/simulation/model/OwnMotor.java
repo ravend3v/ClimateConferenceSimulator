@@ -31,23 +31,8 @@ public class OwnMotor extends Motor {
 	}
 
 	@Override
-	public void setSimulationTime(double simulationTime) {
-		Clock.getInstance().setTime(simulationTime);
-	}
-
-	@Override
 	protected void initialize() {
-		Clock.getInstance().setTime(0);
-
-		//queue.generateNext();
-		double firstEventTime = Clock.getInstance().getTime() + 1; // Ensure the first event is within the simulation time
-		if (firstEventTime > Clock.getInstance().getTime() + 1000) {
-			firstEventTime = Clock.getInstance().getTime() + 1; // Adjust to ensure it is within the simulation time
-		}
-		Event firstEvent = new Event(EventType.ARR1, firstEventTime);
-		eventList.add(firstEvent);
-		System.out.println("Adding new event to the list " + firstEvent.getType() + " " + firstEvent.getTime());
-		System.out.println("initialized properly!");
+		queue.generateNext();
 	}
 
 	@Override
