@@ -1,93 +1,86 @@
 // In OwnMotor.java
 package simulation.model;
 
-import javafx.application.Platform;
+import simulation.controller.IControllerM;
 import simulation.framework.*;
-import simulation.view.CustomerView;
 import simulation.view.ServicePointView;
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
 import utils.NumberUtils;
-import java.util.HashMap;
-import java.util.Map;
 
 public class OwnMotor extends Motor {
 
-	private Queue queue;
-	private ServicePoint[] servicePoints;
-	protected ServicePointView[] servicePointViews;
-	private Map<Integer, CustomerView> customerViews;
+	private final Queue queue;
+	private final ServicePoint[] servicePoints;
+	private final ServicePointView[] servicePointViews;
 
-	public OwnMotor(ServicePointView[] servicePointViews) {
-		this.queue = new Queue(new Negexp(5, 5), eventList, EventType.ARR1);
+    public OwnMotor(IControllerM controller,int[] capacities,ServicePointView[] servicePointViews) {
+		super(controller);
+        this.queue = new Queue(new Negexp(5, 5), eventList, EventType.ARR1);
 		this.servicePointViews = servicePointViews;
-		this.customerViews = new HashMap<>();
 		servicePoints = new ServicePoint[4];
 
-		servicePoints[0] = new EventEntrance(new Normal(10, 10), eventList, EventType.DEP1, 2, 0, queue);
-		servicePoints[1] = new RenewableEnergyStand(new Normal(10, 10), eventList, EventType.DEP2, 4, 0, queue);
-		servicePoints[2] = new ClimateShowcaseRoom(new Normal(5, 3), eventList, EventType.DEP3, 5, 0, queue);
-		servicePoints[3] = new MainStage(new Normal(5, 3), eventList, EventType.DEP4, 10, 0, queue);
+		servicePoints[0] = new EventEntrance(new Normal(10, 10), eventList, EventType.DEP1, capacities[0], 0, queue);
+		servicePoints[1] = new RenewableEnergyStand(new Normal(10, 10), eventList, EventType.DEP2, capacities[1], 0, queue);
+		servicePoints[2] = new ClimateShowcaseRoom(new Normal(5, 3), eventList, EventType.DEP3, capacities[2], 0, queue);
+		servicePoints[3] = new MainStage(new Normal(5, 3), eventList, EventType.DEP4, capacities[3], 0, queue);
+	}
+
+	public ServicePointView[] getServicePointViews() {
+		return servicePointViews;
 	}
 
 	@Override
 	protected void initialize() {
-		queue.generateNext(); // First arrival to the system
+		queue.generateNext();
 	}
 
 	@Override
 	protected void executeEvent(Event event) {  // Phase B events
 		Customer customer;
-		CustomerView customerView;
 
 		switch ((EventType) event.getType()) {
 			case ARR1:
 				customer = new Customer();
 				servicePoints[0].addToQueue(customer);
-				customerView = new CustomerView(customer.getId());
-				customerViews.put(customer.getId(), customerView);
-				Platform.runLater(() -> servicePointViews[0].addCustomerView(customerView));
+				controller.showNewCustomer(customer.getId());
+				System.out.println("arr1: "+customer.getId());
 				queue.generateNext();
 				queue.addArrival();
 				break;
 			case DEP1:
 				queue.addArrival();
 				customer = servicePoints[0].removeFromQueue();
-				customerView = customerViews.get(customer.getId());
-				Platform.runLater(() -> {
-					servicePointViews[0].removeCustomerView(customerView);
-					servicePointViews[1].addCustomerView(customerView);
-				});
+				controller.showCustomer(customer.getId(), 0,1);
 				customer.setExitTime(Clock.getInstance().getTime());
 				servicePoints[1].addToQueue(customer);
+				System.out.println("dep1: "+customer.getId());
+
 				break;
 			case DEP2:
 				customer = servicePoints[1].removeFromQueue();
-				customerView = customerViews.get(customer.getId());
-				Platform.runLater(() -> {
-					servicePointViews[1].removeCustomerView(customerView);
-					servicePointViews[2].addCustomerView(customerView);
-				});
+				controller.showCustomer(customer.getId(), 1,2);
 				customer.setExitTime(Clock.getInstance().getTime());
 				servicePoints[2].addToQueue(customer);
+				System.out.println("dep2: "+customer.getId());
+
 				break;
 			case DEP3:
 				customer = servicePoints[2].removeFromQueue();
-				customerView = customerViews.get(customer.getId());
-				Platform.runLater(() -> {
-					servicePointViews[2].removeCustomerView(customerView);
-					servicePointViews[3].addCustomerView(customerView);
-				});
+				controller.showCustomer(customer.getId(), 2,3);
 				customer.setExitTime(Clock.getInstance().getTime());
 				servicePoints[3].addToQueue(customer);
+				System.out.println("dep3: "+customer.getId());
+
 				break;
 			case DEP4:
 				customer = servicePoints[3].removeFromQueue();
-				customerView = customerViews.get(customer.getId());
-				Platform.runLater(() -> servicePointViews[3].removeCustomerView(customerView));
+				controller.customerExit(customer.getId());
 				customer.setExitTime(Clock.getInstance().getTime());
 				customer.report();
 				queue.addCompleted(customer.getExitTime() - customer.getArrivalTime());
+				System.out.println("exit: "+customer.getId());
+
 				break;
 			default:
 				break;
@@ -98,6 +91,7 @@ public class OwnMotor extends Motor {
 	protected void tryCEvents() {
 		for (ServicePoint p : servicePoints) {
 			if (!p.isBusy() && p.hasQueue()) {
+				System.out.println("pöö");
 				p.startService();
 			}
 		}
@@ -110,10 +104,10 @@ public class OwnMotor extends Motor {
 		int arrivedClientsCount = Customer.arrivedCount();
 		int completedClientsCount = Customer.getCompletedCount();
 		double activeServiceTime = 0.0;
-		double activeServiceTimeEntrance = servicePoints[0].getBusyTime() / servicePoints[0].getCompletedServices();
-		double activeServiceTimeRenewable = servicePoints[1].getBusyTime() / servicePoints[1].getCompletedServices();
-		double activeServiceTimeShowroom = servicePoints[2].getBusyTime() / servicePoints[2].getCompletedServices();
-		double activeServiceTimeMain = servicePoints[3].getBusyTime() / servicePoints[3].getCompletedServices();
+		double activeServiceTimeEntrance = servicePoints[0].getCompletedServices() != 0 ? servicePoints[0].getBusyTime() / servicePoints[0].getCompletedServices() : 0.0;
+		double activeServiceTimeRenewable = servicePoints[1].getCompletedServices() != 0 ? servicePoints[1].getBusyTime() / servicePoints[1].getCompletedServices() : 0.0;
+		double activeServiceTimeShowroom = servicePoints[2].getCompletedServices() != 0 ? servicePoints[2].getBusyTime() / servicePoints[2].getCompletedServices() : 0.0;
+		double activeServiceTimeMain = servicePoints[3].getCompletedServices() != 0 ? servicePoints[3].getBusyTime() / servicePoints[3].getCompletedServices() : 0.0;
 		double allAverage = activeServiceTimeEntrance + activeServiceTimeRenewable + activeServiceTimeShowroom + activeServiceTimeMain;
 
 		for (ServicePoint sp : servicePoints) {
@@ -121,11 +115,19 @@ public class OwnMotor extends Motor {
 		}
 
 		double cumulativeResponseTime = queue.getCumulativeResponseTime();
-		double servicePointUtilization = NumberUtils.round((activeServiceTime / totalTime), 2);
-		double serviceThroughput = NumberUtils.round((completedClientsCount / totalTime), 2);
-		double averageServiceTime = NumberUtils.round((allAverage / 4), 2);
+
+		// Debug statements to print values before rounding
+		System.out.println("Debug: activeServiceTime / totalTime = " + (totalTime != 0 ? activeServiceTime / totalTime : 0.0));
+		System.out.println("Debug: completedClientsCount / totalTime = " + (totalTime != 0 ? completedClientsCount / totalTime : 0.0));
+		System.out.println("Debug: allAverage / 4 = " + (4 != 0 ? allAverage / 4 : 0.0));
+		System.out.println("Debug: Customer.getThroughPut() = " + Customer.getThroughPut());
+		System.out.println("Debug: cumulativeResponseTime / totalTime = " + (totalTime != 0 ? cumulativeResponseTime / totalTime : 0.0));
+
+		double servicePointUtilization = NumberUtils.round((totalTime != 0 ? activeServiceTime / totalTime : 0.0), 2);
+		double serviceThroughput = NumberUtils.round((totalTime != 0 ? completedClientsCount / totalTime : 0.0), 2);
+		double averageServiceTime = NumberUtils.round((4 != 0 ? allAverage / 4 : 0.0), 2);
 		double averageResponseTime = NumberUtils.round(Customer.getThroughPut(), 2);
-		double averageQueueLength = NumberUtils.round((cumulativeResponseTime / totalTime), 2);
+		double averageQueueLength = NumberUtils.round((totalTime != 0 ? cumulativeResponseTime / totalTime : 0.0), 2);
 
 		System.out.println("Simulation ended at " + totalTime);
 		System.out.println("Results:");
@@ -149,6 +151,5 @@ public class OwnMotor extends Motor {
 	protected void updateUI(double time) {
 		System.out.println("Simulation time: " + time);
 	}
-
 
 }
