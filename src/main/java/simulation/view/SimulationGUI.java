@@ -146,10 +146,24 @@ public class SimulationGUI extends Application implements ISimulationUI {
             try {
                 double duration = Double.parseDouble(durationField.getText());
                 int[] capacities = new int[numberDropdowns.length];
+                boolean validCapacities = true;
+
                 for (int i = 0; i < numberDropdowns.length; i++) {
                     capacities[i] = numberDropdowns[i].getValue();
+
+                    // Check that capacities are higher than 1, to avoid 0 results
+                    if (capacities[i] <= 1) {
+                        validCapacities = false;
+                        break;
+                    }
                 }
-                controller.startSimulation(duration, capacities);
+
+                // Inform user if capacities are not higher than 1
+                if (!validCapacities) {
+                    statusLabel.setText("All capacities must be higher than 1");
+                } else {
+                    controller.startSimulation(duration, capacities);
+                }
             } catch (NumberFormatException ex) {
                 statusLabel.setText("Enter a valid number!");
             }
