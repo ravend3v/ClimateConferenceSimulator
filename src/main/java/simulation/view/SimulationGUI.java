@@ -209,6 +209,10 @@ public class SimulationGUI extends Application implements ISimulationUI {
         Platform.runLater(() -> statusLabel.setText(message));
     }
 
+    public Label getStatusLabel() {
+        return statusLabel;
+    }
+
     @Override
     public ServicePointView getEventEntrance() {
         return servicePointViews[0];

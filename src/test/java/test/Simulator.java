@@ -1,3 +1,4 @@
+// This file exists to test the simulator in console only
 package test;
 
 import javafx.application.Application;
