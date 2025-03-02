@@ -32,6 +32,11 @@ public class Controller implements IControllerM,IControllerV{
         new Thread(() -> {
             motor.run();
             Platform.runLater(() -> updateStatusLabel("Simulation Completed!"));
+
+            // Cast the motor to OwnMotor to access the required method
+            if (motor instanceof OwnMotor) {
+                gui.updateResults("Simulation Results:\n" + ((OwnMotor) motor).getResults());
+            }
         }).start();
     }
 

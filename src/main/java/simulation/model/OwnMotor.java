@@ -105,6 +105,10 @@ public class OwnMotor extends Motor {
 		simulationResults.calculateResults();
 	}
 
+	public String getResults() {
+		return simulationResults.getResultsAsString();
+	}
+
 	@Override
 	protected void updateUI(double time) {
 		System.out.println("Simulation time: " + time);
