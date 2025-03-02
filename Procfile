@@ -1,1 +1,0 @@
-web: java -jar target/ClimateConferenceSimulator-1.0-SNAPSHOT.jar
