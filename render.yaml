@@ -1,8 +1,0 @@
-services:
-  - type: web
-    name: ClimateConferenceSimulator
-    env: docker
-    repo: https://github.com/ravend3v/ClimateConferenceSimulator
-    branch: main
-    dockerfilePath: ./Dockerfile
-    autoDeploy: true
