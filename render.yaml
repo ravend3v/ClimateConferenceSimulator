@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: ClimateConferenceSimulator
+    env: java
+    plan: free
+    runtime: java
+    buildCommand: |
+      apt-get update && apt-get install -y maven
+      mvn clean package -DskipTests
+    startCommand: java -jar target/ClimateConferenceSimulator-1.0-SNAPSHOT.jar
