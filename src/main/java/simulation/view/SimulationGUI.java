@@ -9,15 +9,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import simulation.controller.Controller;
 import simulation.controller.IControllerV;
-import simulation.model.OwnMotor;
 
 public class SimulationGUI extends Application implements ISimulationUI {
     private IControllerV controller;
+    private TextArea resultsArea;
     ServicePointView[] servicePointViews = new ServicePointView[4];
     Label statusLabel = new Label();
 
@@ -32,6 +33,13 @@ public class SimulationGUI extends Application implements ISimulationUI {
 
         String textFieldStyle = "-fx-background-color: #ffffff; -fx-border-color: #cccccc; "
                 + "-fx-border-radius: 10px; -fx-padding: 8px; -fx-font-size: 14px;";
+
+        // Initialize the resultsTextArea
+        resultsArea = new TextArea();
+        resultsArea.setFont(new Font(16));
+        resultsArea.setEditable(false);
+        resultsArea.setWrapText(true);
+        resultsArea.setPrefHeight(200);
 
         // Simulation duration input field
         Label durationLabel = new Label("Simulation Duration:");
@@ -122,13 +130,18 @@ public class SimulationGUI extends Application implements ISimulationUI {
         serviceGrid.add(servicePointViews[3], 1, 1);
 
         // Main layout
-        VBox layout = new VBox(30);
-        layout.setAlignment(Pos.CENTER);
-        layout.setStyle("-fx-padding: 50px; -fx-background-color: #f4f4f4;");
-        layout.getChildren().addAll(searchBox, numberDropdownBox, buttonBox, statusLabel, serviceGrid);
+        VBox rightLayout = new VBox(30);
+        rightLayout.setAlignment(Pos.CENTER);
+        rightLayout.setStyle("-fx-padding: 50px; -fx-background-color: #f4f4f4;");
+        rightLayout.getChildren().addAll(searchBox, numberDropdownBox, buttonBox, statusLabel, serviceGrid);
 
-        StackPane root = new StackPane(layout);
-        StackPane.setAlignment(layout, Pos.CENTER);
+        HBox mainLayout = new HBox(30);
+        mainLayout.setAlignment(Pos.CENTER);
+        mainLayout.setStyle("-fx-padding: 50px; -fx-background-color: #f4f4f4;");
+        mainLayout.getChildren().addAll(resultsArea, rightLayout);
+
+        StackPane root = new StackPane(mainLayout);
+        StackPane.setAlignment(mainLayout, Pos.CENTER);
 
         // Scene and window settings
         Scene scene = new Scene(root, 1000, 700);
@@ -219,6 +232,10 @@ public class SimulationGUI extends Application implements ISimulationUI {
     @Override
     public CustomerView getCustomer(int id) {
         return new CustomerView(id);
+    }
+
+    public void updateResults(String message) {
+        Platform.runLater(() -> resultsArea.setText(message));
     }
 
     public static void main(String[] args) {
