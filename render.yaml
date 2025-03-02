@@ -1,9 +1,7 @@
 services:
   - type: web
     name: ClimateConferenceSimulator
-    env: static  # Render does not support `java` runtime, use `static`
-    plan: free
     repo: https://github.com/ravend3v/ClimateConferenceSimulator
     branch: main
     buildCommand: mvn clean package -DskipTests
-    startCommand: java -jar target/ClimateConferenceSimulator-1.0-SNAPSHOT.jar
+
