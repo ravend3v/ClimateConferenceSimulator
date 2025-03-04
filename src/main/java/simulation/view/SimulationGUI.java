@@ -95,6 +95,14 @@ public class SimulationGUI extends Application implements ISimulationUI {
                 numberDropdownBox4
         );
 
+        // Add listeners to the dropdown boxes to update the capacity dynamically
+        for (int i = 0; i < numberDropdowns.length; i++) {
+            final int index = i;
+            numberDropdowns[i].valueProperty().addListener((obs, oldVal, newVal) -> {
+                servicePointViews[index].setUserData(newVal);
+            });
+        }
+
         VBox searchBox = new VBox(10, durationLabel, durationField);
         searchBox.setAlignment(Pos.CENTER);
 
@@ -107,10 +115,10 @@ public class SimulationGUI extends Application implements ISimulationUI {
         buttonBox.setAlignment(Pos.CENTER);
 
         // Service Point views (fixed size, no stretching)
-        servicePointViews[0] = createStyledServicePoint("Event Entrance", "#42a5f5");
-        servicePointViews[1] = createStyledServicePoint("Renewable Energy Stand", "#66bb6a");
-        servicePointViews[2] = createStyledServicePoint("Climate Showcase Room", "#ffa726");
-        servicePointViews[3] = createStyledServicePoint("Main Stage", "#ab47bc");
+        servicePointViews[0] = createStyledServicePoint("Event Entrance", "#42a5f5",numberDropdowns[0].getValue());
+        servicePointViews[1] = createStyledServicePoint("Renewable Energy Stand", "#66bb6a",numberDropdowns[1].getValue());
+        servicePointViews[2] = createStyledServicePoint("Climate Showcase Room", "#ffa726",numberDropdowns[2].getValue());
+        servicePointViews[3] = createStyledServicePoint("Main Stage", "#ab47bc",numberDropdowns[3].getValue());
 
         // Prevent stretching
         for (ServicePointView spv : servicePointViews) {
@@ -185,7 +193,7 @@ public class SimulationGUI extends Application implements ISimulationUI {
 
 
     // Service Point component styles
-    private ServicePointView createStyledServicePoint(String name, String color) {
+    private ServicePointView createStyledServicePoint(String name, String color, int capacity) {
         ServicePointView spv = new ServicePointView(name);
         spv.setStyle("-fx-background-color: " + color + "; " +
                 "-fx-padding: 20px; -fx-border-color: white; " +
@@ -199,10 +207,12 @@ public class SimulationGUI extends Application implements ISimulationUI {
         spv.setMinWidth(200);
 
         // Add max 8 balls per box
-        spv.setUserData(5);
+        spv.setUserData(capacity);
 
         return spv;
     }
+
+
 
     // Method to update the status label
     public void updateStatusLabel(String message) {
