@@ -10,6 +10,7 @@ public class Customer {
 	private int id;
 	private static int i = 1;
 	private static long sum = 0;
+	private static int arrivedCount = 0;
 	private static int completedCount = 0;
 	private static int lastID;
 	private static double throughPut;
@@ -19,6 +20,15 @@ public class Customer {
 		lastID = id;
 		arrivalTime = Clock.getInstance().getTime();
 		//Trace.out(Trace.Level.INFO, "New customer no " + i + " arrived at "+ arrivalTime);
+	}
+
+	public static void resetCounts() {
+		arrivedCount = 0;
+		completedCount = 0;
+		i = 1;
+		sum = 0;
+		lastID = 0;
+		throughPut = 0.0;
 	}
 
 	public double getExitTime() {

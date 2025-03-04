@@ -12,6 +12,16 @@ public class SimulationResults {
     public SimulationResults(ServicePoint[] servicePoints, Queue queue) {
         this.servicePoints = servicePoints;
         this.queue = queue;
+        reset();
+    }
+
+    public void reset() {
+        for (ServicePoint sp : servicePoints) {
+            sp.reset();
+        }
+        queue.resetStatistics();
+        Customer.resetCounts();
+        Clock.getInstance().reset();
     }
 
     public void calculateResults() {
