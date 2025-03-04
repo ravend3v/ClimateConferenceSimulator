@@ -18,7 +18,7 @@ public class OwnMotor extends Motor {
 
 	public OwnMotor(IControllerM controller,int[] capacities,ServicePointView[] servicePointViews) {
 		super(controller);
-        this.queue = new Queue(new Negexp(5, 5), eventList, EventType.ARR1);
+        this.queue = new Queue(new Negexp(10, 5), eventList, EventType.ARR1);
 		this.servicePointViews = servicePointViews;
 		servicePoints = new ServicePoint[4];
 
@@ -39,6 +39,7 @@ public class OwnMotor extends Motor {
 		queue.generateNext();
 	}
 
+
 	@Override
 	protected void executeEvent(Event event) {  // Phase B events
 		Customer customer;
@@ -50,10 +51,10 @@ public class OwnMotor extends Motor {
 				controller.showNewCustomer(customer.getId());
 				System.out.println("arr1: "+customer.getId());
 				queue.generateNext();
-				queue.addArrival();
+				//queue.addArrival();
 				break;
 			case DEP1:
-				queue.addArrival();
+				//queue.addArrival();
 				customer = servicePoints[0].removeFromQueue();
 				controller.showCustomer(customer.getId(), 0,1);
 				customer.setExitTime(Clock.getInstance().getTime());
@@ -83,7 +84,8 @@ public class OwnMotor extends Motor {
 				customer.setExitTime(Clock.getInstance().getTime());
 				customer.report();
 				queue.addCompleted(customer.getExitTime() - customer.getArrivalTime());
-				System.out.println("exit: "+customer.getId());
+				Customer.addCompletedCustomer();
+				System.out.println("exited customers: "+Customer.getCompletedCount());
 
 				break;
 			default:

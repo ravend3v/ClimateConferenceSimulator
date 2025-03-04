@@ -1,10 +1,8 @@
 package simulation.view;
 
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import simulation.model.Customer;
+
 
 public class ServicePointView extends VBox {
     private final Text nameText;
@@ -18,7 +16,8 @@ public class ServicePointView extends VBox {
     }
 
     public void addCustomerView(CustomerView customerView) {
-        if (queueBox.getChildren().size() < (int) getUserData()) { // Max 8 palloa per laatikko
+
+        if (!queueBox.getChildren().contains(customerView) && queueBox.getChildren().size() < (int) getUserData()) {
             queueBox.getChildren().add(customerView);
         }
     }
