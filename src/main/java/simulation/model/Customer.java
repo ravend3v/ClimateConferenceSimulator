@@ -50,11 +50,15 @@ public class Customer {
 		double average = (double) sum / id;
 		throughPut = average;
 		System.out.println("Average throughput time of customers so far "+ average);
-		completedCount++;
+
 	}
 
 	public static int getCompletedCount() {
 		return completedCount;
+	}
+
+	public static void addCompletedCustomer(){
+		completedCount++;
 	}
 
 	public static int arrivedCount(){
