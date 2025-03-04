@@ -62,6 +62,14 @@ public class ServicePoint {
 		}
 	}
 
+	public void reset() {
+		this.busyTime = 0.0;
+		this.completedServices = 0;
+		this.currentCustomerCount = 0;
+		this.busy = false;
+		queue.clear();
+	}
+
 	public boolean isBusy(){
 		return busy;
 	}

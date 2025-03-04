@@ -21,6 +21,10 @@ public class Clock {
 		return instance;
 	}
 
+	public void reset() {
+		time = 0.0;
+	}
+
 	public void setTime(double time){
 		this.time = time;
 	}
