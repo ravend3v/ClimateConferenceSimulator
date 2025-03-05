@@ -26,19 +26,28 @@ public class Controller implements IControllerM,IControllerV{
 
     @Override
     public void startSimulation(double time,int[] capacities){
+        try {
+            motor = new OwnMotor(this, capacities, getAllServicePointViews());
+            motor.setSimulationTime(time);
+            motor.setDelay(ui.getDelay());
+            new Thread(() -> {
+                try {
+                    motor.run();
+                    Platform.runLater(() -> updateStatusLabel("Simulation Completed!"));
 
-        motor = new OwnMotor(this,capacities,getAllServicePointViews());
-        motor.setSimulationTime(time);
-        motor.setDelay(ui.getDelay());
-        new Thread(() -> {
-            motor.run();
-            Platform.runLater(() -> updateStatusLabel("Simulation Completed!"));
-
-            // Cast the motor to OwnMotor to access the required method
-            if (motor instanceof OwnMotor) {
-                gui.updateResults("Simulation Results:\n" + ((OwnMotor) motor).getResults());
-            }
-        }).start();
+                    // Cast the motor to OwnMotor to access the required method
+                    if (motor instanceof OwnMotor) {
+                        gui.updateResults("Simulation Results:\n" + ((OwnMotor) motor).getResults());
+                    }
+                } catch (Exception e) {
+                    Platform.runLater(() -> updateStatusLabel("Error during simulation: " + e.getMessage()));
+                    e.printStackTrace();
+                }
+            }).start();
+        } catch (Exception e) {
+            updateStatusLabel("Error starting simulation");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -90,14 +99,13 @@ public class Controller implements IControllerM,IControllerV{
     }
 
     public ServicePointView[] getAllServicePointViews(){
-        ServicePointView[] servicePointViews = {ui.getEventEntrance(),
-                                                ui.getRenewable(),
-                                                ui.getShowRoom(),
-                                                ui.getMainStage()};
+        ServicePointView[] servicePointViews = {
+                ui.getEventEntrance(),
+                ui.getRenewable(),
+                ui.getShowRoom(),
+                ui.getMainStage()};
         return servicePointViews;
     }
-
-
 
     @Override
     public void updateStatusLabel(String message) {
