@@ -7,4 +7,5 @@ public interface ISimulationUI {
     public ServicePointView getShowRoom();
     public ServicePointView getMainStage();
     public CustomerView getCustomer(int id);
+    public long getDelay();
 }

@@ -4,6 +4,7 @@ import simulation.controller.IControllerM;
 public abstract class Motor extends Thread implements IMotor{
 
     private double simulationTime = 0;
+    private long delay = 0;
     private final Clock clock;
     protected EventList eventList;
     protected IControllerM controller;
@@ -21,9 +22,20 @@ public abstract class Motor extends Thread implements IMotor{
     }
 
     @Override
+    public void setDelay(long delay){
+        this.delay = delay;
+    }
+
+    @Override
+    public long getDelay(){
+        return delay;
+    }
+
+    @Override
     public void run() {
         initialize(); // Create the first event, among other things
         while (isSimulating()) {
+            delay();
             Trace.out(Trace.Level.INFO, "\nPhase A: the clock is " + currentTime());
             clock.setTime(currentTime());
 
@@ -62,4 +74,14 @@ public abstract class Motor extends Thread implements IMotor{
     protected void updateUI(double time) {
         // Override this method in the subclasses to update UI
     }
+
+    private void delay(){
+        Trace.out(Trace.Level.INFO, "delay " + delay);
+        try {
+            sleep(delay);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
