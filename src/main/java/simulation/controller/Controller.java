@@ -29,6 +29,7 @@ public class Controller implements IControllerM,IControllerV{
 
         motor = new OwnMotor(this,capacities,getAllServicePointViews());
         motor.setSimulationTime(time);
+        motor.setDelay(ui.getDelay());
         new Thread(() -> {
             motor.run();
             Platform.runLater(() -> updateStatusLabel("Simulation Completed!"));
@@ -38,6 +39,16 @@ public class Controller implements IControllerM,IControllerV{
                 gui.updateResults("Simulation Results:\n" + ((OwnMotor) motor).getResults());
             }
         }).start();
+    }
+
+    @Override
+    public void slowDown(){
+        motor.setDelay((long)(motor.getDelay()*1.10));
+    }
+
+    @Override
+    public void speedUp(){
+        motor.setDelay((long)(motor.getDelay()*0.9));
     }
 
 

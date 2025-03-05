@@ -21,6 +21,7 @@ public class SimulationGUI extends Application implements ISimulationUI {
     private TextArea resultsArea;
     ServicePointView[] servicePointViews = new ServicePointView[4];
     Label statusLabel = new Label();
+    private TextField delay;
 
     @Override
     public void start(Stage primaryStage) {
@@ -106,13 +107,30 @@ public class SimulationGUI extends Application implements ISimulationUI {
         VBox searchBox = new VBox(10, durationLabel, durationField);
         searchBox.setAlignment(Pos.CENTER);
 
+        // Button for slowing down simulation
+        Button slowdownBtn = new Button("Slow down");
+        slowdownBtn.setOnAction(e -> controller.slowDown());
+        slowdownBtn.setStyle(buttonStyle);
+
+        // Button for speeding up simulation
+        Button speedupBtn = new Button("Speed up");
+        speedupBtn.setOnAction(e -> controller.speedUp());
+        speedupBtn.setStyle(buttonStyle);
+
+        // textfield for delay
+        Label delayLabel = new Label("Delay:");
+        delay = new TextField("Set delay...");
+        delay.setStyle(textFieldStyle);
+
         // Start Simulation button
         Button startButton = new Button("Start Simulation");
         startButton.setFont(new Font(14));
         startButton.setStyle(buttonStyle);
 
-        VBox buttonBox = new VBox(10, startButton);
+        HBox buttonBox = new HBox(10,delayLabel,delay,slowdownBtn,speedupBtn,startButton);
         buttonBox.setAlignment(Pos.CENTER);
+
+
 
         // Service Point views (fixed size, no stretching)
         servicePointViews[0] = createStyledServicePoint("Event Entrance", "#42a5f5",numberDropdowns[0].getValue());
@@ -250,6 +268,11 @@ public class SimulationGUI extends Application implements ISimulationUI {
 
     public void updateResults(String message) {
         Platform.runLater(() -> resultsArea.setText(message));
+    }
+
+    @Override
+    public long getDelay(){
+        return Long.parseLong(delay.getText());
     }
 
     public static void main(String[] args) {
