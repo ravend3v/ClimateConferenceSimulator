@@ -74,7 +74,9 @@ public class EventEntrance extends ServicePoint{
         }
 
         for (Customer c : processing) {
-            this.addToQueue(c);
+            if (!getQueue().contains(c)) {
+                this.addToQueue(c);
+            }
         }
 
 

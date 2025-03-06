@@ -80,12 +80,26 @@ public class OwnMotor extends Motor {
 				break;
 			case DEP4:
 				customer = servicePoints[3].removeFromQueue();
+				if (customer != null) {
+					controller.customerExit(customer.getId());
+					customer.setExitTime(Clock.getInstance().getTime());
+					customer.report();
+					queue.addCompleted(customer.getExitTime() - customer.getArrivalTime());
+					Customer.addCompletedCustomer();
+					System.out.println("exited customers: " + Customer.getCompletedCount());
+					System.out.println("Customer " + customer.getId() + " processed in DEP4.");
+				} else {
+					System.err.println("Error: Attempted to process a null customer in DEP4.");
+				}
+				/*
+				customer = servicePoints[3].removeFromQueue();
 				controller.customerExit(customer.getId());
 				customer.setExitTime(Clock.getInstance().getTime());
 				customer.report();
 				queue.addCompleted(customer.getExitTime() - customer.getArrivalTime());
 				Customer.addCompletedCustomer();
 				System.out.println("exited customers: "+Customer.getCompletedCount());
+			*/
 
 				break;
 			default:
