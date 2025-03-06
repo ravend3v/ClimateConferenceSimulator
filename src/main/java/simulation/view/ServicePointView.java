@@ -25,4 +25,8 @@ public class ServicePointView extends VBox {
     public void removeCustomerView(CustomerView customerView) {
         queueBox.getChildren().remove(customerView);
     }
+
+    public void clearCustomerViews() {
+        queueBox.getChildren().clear();
+    }
 }
