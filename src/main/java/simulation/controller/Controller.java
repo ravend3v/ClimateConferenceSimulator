@@ -27,6 +27,7 @@ public class Controller implements IControllerM,IControllerV{
     @Override
     public void startSimulation(double time,int[] capacities){
         try {
+            clearVisibleClients();
             motor = new OwnMotor(this, capacities, getAllServicePointViews());
             motor.setSimulationTime(time);
             motor.setDelay(ui.getDelay());
@@ -105,6 +106,15 @@ public class Controller implements IControllerM,IControllerV{
                 ui.getShowRoom(),
                 ui.getMainStage()};
         return servicePointViews;
+    }
+
+    public void clearVisibleClients() {
+        Platform.runLater(() -> {
+            ui.getEventEntrance().clearCustomerViews();
+            ui.getRenewable().clearCustomerViews();
+            ui.getShowRoom().clearCustomerViews();
+            ui.getMainStage().clearCustomerViews();
+        });
     }
 
     @Override
