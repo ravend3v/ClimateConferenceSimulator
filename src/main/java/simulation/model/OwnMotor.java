@@ -46,15 +46,15 @@ public class OwnMotor extends Motor {
 
 		switch ((EventType) event.getType()) {
 			case ARR1:
-				customer = new Customer();
+				CustomerDistribution distribution = new CustomerDistribution();
+				CustomerType type = CustomerType.fromInt(distribution.getNextCustomerType());
+				customer = new Customer(type);
 				servicePoints[0].addToQueue(customer);
-				controller.showNewCustomer(customer.getId());
+				controller.showNewCustomer(customer.getId(),customer.getType());
 				System.out.println("arr1: "+customer.getId());
 				queue.generateNext();
-				//queue.addArrival();
 				break;
 			case DEP1:
-				//queue.addArrival();
 				customer = servicePoints[0].removeFromQueue();
 				controller.showCustomer(customer.getId(), 0,1);
 				customer.setExitTime(Clock.getInstance().getTime());
@@ -91,15 +91,6 @@ public class OwnMotor extends Motor {
 				} else {
 					System.err.println("Error: Attempted to process a null customer in DEP4.");
 				}
-				/*
-				customer = servicePoints[3].removeFromQueue();
-				controller.customerExit(customer.getId());
-				customer.setExitTime(Clock.getInstance().getTime());
-				customer.report();
-				queue.addCompleted(customer.getExitTime() - customer.getArrivalTime());
-				Customer.addCompletedCustomer();
-				System.out.println("exited customers: "+Customer.getCompletedCount());
-			*/
 
 				break;
 			default:
