@@ -2,6 +2,7 @@ package simulation.controller;
 
 import javafx.application.Platform;
 import simulation.framework.IMotor;
+import simulation.model.CustomerType;
 import simulation.model.OwnMotor;
 import simulation.view.CustomerView;
 import simulation.view.ISimulationUI;
@@ -64,8 +65,8 @@ public class Controller implements IControllerM,IControllerV{
 
     // uuden asiakkaan lisäys
     @Override
-    public void showNewCustomer(int customerId){
-        CustomerView cView = ui.getCustomer(customerId);
+    public void showNewCustomer(int customerId, CustomerType type){
+        CustomerView cView = ui.getCustomer(customerId, type);
         customerViews.put(customerId,cView);
         Platform.runLater(() -> ui.getEventEntrance().addCustomerView(cView));
 

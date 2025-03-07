@@ -2,23 +2,35 @@ package simulation.model;
 
 import simulation.framework.*;
 
+import java.util.HashMap;
+
 // TODO:
 // Customer coded as required by the simulation model (data!)
 public class Customer {
 	private double arrivalTime;
 	private double exitTime;
 	private int id;
+	private CustomerType type;
 	private static int i = 1;
 	private static long sum = 0;
 	private static int arrivedCount = 0;
 	private static int completedCount = 0;
 	private static int lastID;
 	private static double throughPut;
+	private static HashMap<CustomerType,Integer> typeCount = new HashMap<>();
 
-	public Customer(){
+	static {
+		for (CustomerType type : CustomerType.values()) {
+			typeCount.put(type, 0);
+		}
+	}
+
+	public Customer(CustomerType type){
 		id = i++;
 		lastID = id;
 		arrivalTime = Clock.getInstance().getTime();
+		this.type = type;
+		typeCount.put(type, typeCount.get(type) + 1);
 		//Trace.out(Trace.Level.INFO, "New customer no " + i + " arrived at "+ arrivalTime);
 	}
 
@@ -29,6 +41,9 @@ public class Customer {
 		sum = 0;
 		lastID = 0;
 		throughPut = 0.0;
+		for (CustomerType type : CustomerType.values()) {
+			typeCount.put(type, 0);
+		}
 	}
 
 	public double getExitTime() {
@@ -51,8 +66,13 @@ public class Customer {
 		return id;
 	}
 
+	public CustomerType getType() {
+		return type;
+	}
+
 	public void report(){
 		Trace.out(Trace.Level.INFO, "\nCustomer "+ id + " finished! ");
+		Trace.out(Trace.Level.INFO, "\nCustomer type"+ type);
 		Trace.out(Trace.Level.INFO, "Customer "+ id + " arrived: " + arrivalTime);
 		Trace.out(Trace.Level.INFO,"Customer "+ id + " exited: " + exitTime);
 		Trace.out(Trace.Level.INFO,"Customer "+ id + " stayed: " + (exitTime - arrivalTime));
@@ -77,6 +97,10 @@ public class Customer {
 
 	public static double getThroughPut(){
 		return throughPut;
+	}
+
+	public static HashMap<CustomerType, Integer> getTypeCount() {
+		return typeCount;
 	}
 
 }

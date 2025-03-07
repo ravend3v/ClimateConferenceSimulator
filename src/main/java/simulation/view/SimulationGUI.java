@@ -15,6 +15,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import simulation.controller.Controller;
 import simulation.controller.IControllerV;
+import simulation.model.CustomerType;
 
 public class SimulationGUI extends Application implements ISimulationUI {
     private IControllerV controller;
@@ -262,8 +263,8 @@ public class SimulationGUI extends Application implements ISimulationUI {
     }
 
     @Override
-    public CustomerView getCustomer(int id) {
-        return new CustomerView(id);
+    public CustomerView getCustomer(int id, CustomerType type) {
+        return new CustomerView(id, type);
     }
 
     public void updateResults(String message) {

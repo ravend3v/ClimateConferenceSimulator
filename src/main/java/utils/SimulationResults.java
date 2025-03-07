@@ -7,11 +7,13 @@ import javafx.application.Platform;
 import org.bson.Document;
 import database.DatabaseUtils;
 
+import simulation.model.CustomerType;
 import simulation.model.ServicePoint;
 import simulation.framework.Queue;
 import simulation.model.Customer;
 import simulation.framework.Clock;
 
+import java.util.HashMap;
 import java.util.concurrent.*;
 
 public class SimulationResults {
@@ -38,7 +40,7 @@ public class SimulationResults {
 
         try {
             double totalTime = Clock.getInstance().getTime();
-
+            HashMap<CustomerType, Integer> customerTypeCounts = Customer.getTypeCount();
             int arrivedClientsCount = Customer.arrivedCount();
             int completedClientsCount = Customer.getCompletedCount();
             double activeServiceTime = 0.0;
@@ -65,6 +67,11 @@ public class SimulationResults {
             System.out.println("A (Arrived Clients Count): " + arrivedClientsCount);
             System.out.println("C (Completed Clients Count): " + completedClientsCount);
             System.out.println("B (Active Service Time total): " + activeServiceTime);
+
+            System.out.println("Customer type counts: ");
+            System.out.println("- Students: "+customerTypeCounts.get(CustomerType.STUDENT));
+            System.out.println("- Deciders: "+customerTypeCounts.get(CustomerType.DECIDER));
+            System.out.println("- Experts: "+customerTypeCounts.get(CustomerType.EXPERT));
 
             System.out.println("Active service times for each service point: ");
 
@@ -105,6 +112,7 @@ public class SimulationResults {
 
     public String getResultsAsString() {
         double totalTime = Clock.getInstance().getTime();
+        HashMap<CustomerType, Integer> customerTypeCounts = Customer.getTypeCount();
         int arrivedClientsCount = Customer.arrivedCount();
         int completedClientsCount = Customer.getCompletedCount();
         double activeServiceTime = 0.0;
@@ -132,6 +140,10 @@ public class SimulationResults {
                 "A (Arrived Clients Count): " + arrivedClientsCount + "\n" +
                 "C (Completed Clients Count): " + completedClientsCount + "\n" +
                 "B (Active Service Time total): " + activeServiceTime + "\n" +
+                        "Customer type counts: "+"\n" +
+                        "- Students: "+customerTypeCounts.get(CustomerType.STUDENT)+"\n" +
+                        "- Deciders: "+customerTypeCounts.get(CustomerType.DECIDER)+"\n" +
+                        "- Experts: "+customerTypeCounts.get(CustomerType.EXPERT)+"\n" +
                 "Active service times for each service point:\n" +
                 "- Event Entrance busytime: " + activeServiceTimeEntrance + ", completed services: " + servicePoints[0].getCompletedServices() + "\n" +
                 "- Renewable energy stand busytime: " + activeServiceTimeRenewable + ", completed services: " + servicePoints[1].getCompletedServices() + "\n" +
