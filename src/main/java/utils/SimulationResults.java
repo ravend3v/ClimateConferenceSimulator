@@ -158,14 +158,25 @@ public class SimulationResults {
 
     }
 
-    // Handle the database operations asynchronously
+
+    // Method to save the results to the database
     private void saveResultsToDatabase(int arrivedClientsCount, int completedClientsCount, double activeServiceTime, double activeServiceTimeEntrance, double activeServiceTimeRenewable, double activeServiceTimeShowroom, double activeServiceTimeMain, double totalTime, double servicePointUtilization, double serviceThroughput, double averageServiceTime, double averageResponseTime, double averageQueueLength) {
         new Thread(() -> {
             try {
                 MongoDatabase database = DatabaseUtils.getDatabase(EnvUtils.getEnv("DB_NAME"));
-                MongoCollection<Document> collection = database.getCollection("Results");
+                if (database == null) {
+                    System.out.println("Failed to connect to the database.");
+                    return;
+                }
+                System.out.println("Connected to the database.");
 
-                Document filter = new Document(); // Empty filter to match the first document
+                MongoCollection<Document> collection = database.getCollection("Results");
+                if (collection == null) {
+                    System.out.println("Collection 'Results' does not exist.");
+                    return;
+                }
+                System.out.println("Collection 'Results' exists.");
+
                 Document update = new Document("$set", new Document("arrivedClientsCount", arrivedClientsCount)
                         .append("completedClientsCount", completedClientsCount)
                         .append("activeServiceTime", activeServiceTime)
@@ -180,15 +191,15 @@ public class SimulationResults {
                         .append("averageResponseTime", averageResponseTime)
                         .append("averageQueueLength", averageQueueLength));
 
-                UpdateOptions options = new UpdateOptions().upsert(true);
-                collection.updateOne(filter, update, options);
+                var result = collection.insertOne(update);
+                System.out.println("Update result: " + result);
+
             } catch (Exception e) {
                 System.out.println("Error while saving results to the database");
                 e.printStackTrace();
             }
         }).start();
     }
-
     public void fetchResultsFromDatabase() {
         new Thread(() -> {
             try {
