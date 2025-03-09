@@ -1,0 +1,1292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="unit_tests.ControllerTest" time="2.189" tests="4" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="17"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="C:\Users\biank\Metropolia\ClimateConferenceSimulator\target\test-classes;C:\Users\biank\Metropolia\ClimateConferenceSimulator\target\classes;C:\Users\biank\.m2\repository\junit\junit\4.13.2\junit-4.13.2.jar;C:\Users\biank\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\biank\.m2\repository\org\openjfx\javafx-controls\21\javafx-controls-21.jar;C:\Users\biank\.m2\repository\org\openjfx\javafx-controls\21\javafx-controls-21-win.jar;C:\Users\biank\.m2\repository\org\openjfx\javafx-graphics\21\javafx-graphics-21.jar;C:\Users\biank\.m2\repository\org\openjfx\javafx-graphics\21\javafx-graphics-21-win.jar;C:\Users\biank\.m2\repository\org\openjfx\javafx-base\21\javafx-base-21.jar;C:\Users\biank\.m2\repository\org\openjfx\javafx-base\21\javafx-base-21-win.jar;C:\Users\biank\.m2\repository\org\openjfx\javafx-fxml\21\javafx-fxml-21.jar;C:\Users\biank\.m2\repository\org\openjfx\javafx-fxml\21\javafx-fxml-21-win.jar;C:\Users\biank\.m2\repository\org\openjfx\javafx-swing\17.0.2\javafx-swing-17.0.2.jar;C:\Users\biank\.m2\repository\org\openjfx\javafx-swing\17.0.2\javafx-swing-17.0.2-win.jar;C:\Users\biank\.m2\repository\org\mockito\mockito-core\4.0.0\mockito-core-4.0.0.jar;C:\Users\biank\.m2\repository\net\bytebuddy\byte-buddy\1.11.19\byte-buddy-1.11.19.jar;C:\Users\biank\.m2\repository\net\bytebuddy\byte-buddy-agent\1.11.19\byte-buddy-agent-1.11.19.jar;C:\Users\biank\.m2\repository\org\objenesis\objenesis\3.2\objenesis-3.2.jar;C:\Users\biank\.m2\repository\org\mongodb\mongodb-driver-sync\4.7.1\mongodb-driver-sync-4.7.1.jar;C:\Users\biank\.m2\repository\org\mongodb\bson\4.7.1\bson-4.7.1.jar;C:\Users\biank\.m2\repository\org\mongodb\mongodb-driver-core\4.7.1\mongodb-driver-core-4.7.1.jar;C:\Users\biank\.m2\repository\org\mongodb\bson-record-codec\4.7.1\bson-record-codec-4.7.1.jar;C:\Users\biank\.m2\repository\io\github\cdimascio\java-dotenv\5.2.2\java-dotenv-5.2.2.jar;C:\Users\biank\.m2\repository\org\jetbrains\kotlin\kotlin-stdlib\1.4.0\kotlin-stdlib-1.4.0.jar;C:\Users\biank\.m2\repository\org\jetbrains\kotlin\kotlin-stdlib-common\1.4.0\kotlin-stdlib-common-1.4.0.jar;C:\Users\biank\.m2\repository\org\jetbrains\annotations\13.0\annotations-13.0.jar;"/>
+    <property name="java.vm.vendor" value="Eclipse Adoptium"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://adoptium.net/"/>
+    <property name="user.timezone" value="Europe/Helsinki"/>
+    <property name="user.country.format" value="FI"/>
+    <property name="os.name" value="Windows 11"/>
+    <property name="java.vm.specification.version" value="17"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="GB"/>
+    <property name="sun.boot.library.path" value="C:\Users\biank\Desktop\jdk-17.0.14+7\bin"/>
+    <property name="sun.java.command" value="C:\Users\biank\AppData\Local\Temp\surefire18368201885854728010\surefirebooter-20250309213946984_3.jar C:\Users\biank\AppData\Local\Temp\surefire18368201885854728010 2025-03-09T21-39-46_698-jvmRun1 surefire-20250309213946984_1tmp surefire_0-20250309213946984_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="C:\Users\biank\Metropolia\ClimateConferenceSimulator\target\test-classes;C:\Users\biank\Metropolia\ClimateConferenceSimulator\target\classes;C:\Users\biank\.m2\repository\junit\junit\4.13.2\junit-4.13.2.jar;C:\Users\biank\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\biank\.m2\repository\org\openjfx\javafx-controls\21\javafx-controls-21.jar;C:\Users\biank\.m2\repository\org\openjfx\javafx-controls\21\javafx-controls-21-win.jar;C:\Users\biank\.m2\repository\org\openjfx\javafx-graphics\21\javafx-graphics-21.jar;C:\Users\biank\.m2\repository\org\openjfx\javafx-graphics\21\javafx-graphics-21-win.jar;C:\Users\biank\.m2\repository\org\openjfx\javafx-base\21\javafx-base-21.jar;C:\Users\biank\.m2\repository\org\openjfx\javafx-base\21\javafx-base-21-win.jar;C:\Users\biank\.m2\repository\org\openjfx\javafx-fxml\21\javafx-fxml-21.jar;C:\Users\biank\.m2\repository\org\openjfx\javafx-fxml\21\javafx-fxml-21-win.jar;C:\Users\biank\.m2\repository\org\openjfx\javafx-swing\17.0.2\javafx-swing-17.0.2.jar;C:\Users\biank\.m2\repository\org\openjfx\javafx-swing\17.0.2\javafx-swing-17.0.2-win.jar;C:\Users\biank\.m2\repository\org\mockito\mockito-core\4.0.0\mockito-core-4.0.0.jar;C:\Users\biank\.m2\repository\net\bytebuddy\byte-buddy\1.11.19\byte-buddy-1.11.19.jar;C:\Users\biank\.m2\repository\net\bytebuddy\byte-buddy-agent\1.11.19\byte-buddy-agent-1.11.19.jar;C:\Users\biank\.m2\repository\org\objenesis\objenesis\3.2\objenesis-3.2.jar;C:\Users\biank\.m2\repository\org\mongodb\mongodb-driver-sync\4.7.1\mongodb-driver-sync-4.7.1.jar;C:\Users\biank\.m2\repository\org\mongodb\bson\4.7.1\bson-4.7.1.jar;C:\Users\biank\.m2\repository\org\mongodb\mongodb-driver-core\4.7.1\mongodb-driver-core-4.7.1.jar;C:\Users\biank\.m2\repository\org\mongodb\bson-record-codec\4.7.1\bson-record-codec-4.7.1.jar;C:\Users\biank\.m2\repository\io\github\cdimascio\java-dotenv\5.2.2\java-dotenv-5.2.2.jar;C:\Users\biank\.m2\repository\org\jetbrains\kotlin\kotlin-stdlib\1.4.0\kotlin-stdlib-1.4.0.jar;C:\Users\biank\.m2\repository\org\jetbrains\kotlin\kotlin-stdlib-common\1.4.0\kotlin-stdlib-common-1.4.0.jar;C:\Users\biank\.m2\repository\org\jetbrains\annotations\13.0\annotations-13.0.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\biank"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2025-01-21"/>
+    <property name="java.home" value="C:\Users\biank\Desktop\jdk-17.0.14+7"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="C:\Users\biank\Metropolia\ClimateConferenceSimulator"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="surefire.real.class.path" value="C:\Users\biank\AppData\Local\Temp\surefire18368201885854728010\surefirebooter-20250309213946984_3.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="17.0.14+7"/>
+    <property name="user.name" value="biank"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="Cp1252"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="Temurin-17.0.14+7"/>
+    <property name="localRepository" value="C:\Users\biank\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://github.com/adoptium/adoptium-support/issues"/>
+    <property name="java.io.tmpdir" value="C:\Users\biank\AppData\Local\Temp\"/>
+    <property name="java.version" value="17.0.14"/>
+    <property name="user.dir" value="C:\Users\biank\Metropolia\ClimateConferenceSimulator"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="native.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Users\biank\Desktop\jdk-17.0.14+7\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\biank\bin;C:\Users\biank\Desktop\jdk-17.0.14+7\bin;C:\Maven\apache-maven-3.9.9\bin;C:\Users\biank\Desktop\jdk-17.0.14+7\bin;C:\Maven\apache-maven-3.9.9\bin;C:\Users\biank\AppData\Local\Programs\Microsoft VS Code\bin;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="java.vendor" value="Eclipse Adoptium"/>
+    <property name="java.vm.version" value="17.0.14+7"/>
+    <property name="java.specification.maintenance.version" value="1"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="61.0"/>
+  </properties>
+  <testcase name="testShowNewCustomer" classname="unit_tests.ControllerTest" time="1.756">
+    <system-err><![CDATA[Mar 09, 2025 9:39:48 PM com.sun.javafx.application.PlatformImpl startup
+WARNING: Unsupported JavaFX configuration: classes were loaded from 'unnamed module @60addb54'
+]]></system-err>
+  </testcase>
+  <testcase name="testStartSimulation" classname="unit_tests.ControllerTest" time="0.259">
+    <system-out><![CDATA[Adding new event to the list ARR1 3.150012093190316
+delay 0
+
+Phase A: the clock is 3.150012093190316
+
+Phase B:
+Removing from event list ARR1 3.150012093190316
+arr1: 1
+Adding new event to the list ARR1 3.315895265459741
+
+Phase C:
+Starting event entrance for customer 1
+Adding new event to the list DEP1 13.264118127132804
+current count at event entrance: 1
+Simulation time: 3.315895265459741
+delay 0
+
+Phase A: the clock is 3.315895265459741
+
+Phase B:
+Removing from event list ARR1 3.315895265459741
+arr1: 2
+Adding new event to the list ARR1 20.30195958778225
+
+Phase C:
+Starting event entrance for customer 2
+Adding new event to the list DEP1 11.765265616133602
+current count at event entrance: 2
+Simulation time: 11.765265616133602
+delay 0
+
+Phase A: the clock is 11.765265616133602
+
+Phase B:
+Removing from event list DEP1 11.765265616133602
+dep1: 2
+
+Phase C:
+Starting renewable energy stand for customer 2
+Adding new event to the list DEP2 19.900061836865774
+current count at renewable energy: 1
+Simulation time: 13.264118127132804
+delay 0
+
+Phase A: the clock is 13.264118127132804
+
+Phase B:
+Removing from event list DEP1 13.264118127132804
+dep1: 1
+
+Phase C:
+Starting renewable energy stand for customer 1
+Adding new event to the list DEP2 21.264999995991232
+current count at renewable energy: 2
+Simulation time: 19.900061836865774
+delay 0
+
+Phase A: the clock is 19.900061836865774
+
+Phase B:
+Removing from event list DEP2 19.900061836865774
+dep2: 2
+
+Phase C:
+Starting climate showcase room for customer 2
+Adding new event to the list DEP3 25.479627493564045
+current count at climate showcase room: 1
+Simulation time: 20.30195958778225
+delay 0
+
+Phase A: the clock is 20.30195958778225
+
+Phase B:
+Removing from event list ARR1 20.30195958778225
+arr1: 3
+Adding new event to the list ARR1 26.726986429444246
+
+Phase C:
+Starting event entrance for customer 3
+Adding new event to the list DEP1 30.749283767410365
+current count at event entrance: 1
+Simulation time: 21.264999995991232
+delay 0
+
+Phase A: the clock is 21.264999995991232
+
+Phase B:
+Removing from event list DEP2 21.264999995991232
+dep2: 1
+
+Phase C:
+Starting climate showcase room for customer 1
+Adding new event to the list DEP3 26.181899598769544
+current count at climate showcase room: 2
+Simulation time: 25.479627493564045
+delay 0
+
+Phase A: the clock is 25.479627493564045
+
+Phase B:
+Removing from event list DEP3 25.479627493564045
+dep3: 2
+
+Phase C:
+Starting main stage for customer 2
+Adding new event to the list DEP4 31.673903536539022
+current count at main stage: 1
+Simulation time: 26.181899598769544
+delay 0
+
+Phase A: the clock is 26.181899598769544
+
+Phase B:
+Removing from event list DEP3 26.181899598769544
+dep3: 1
+
+Phase C:
+Starting main stage for customer 1
+Adding new event to the list DEP4 32.390436118837634
+current count at main stage: 2
+Simulation time: 26.726986429444246
+delay 0
+
+Phase A: the clock is 26.726986429444246
+
+Phase B:
+Removing from event list ARR1 26.726986429444246
+arr1: 4
+Adding new event to the list ARR1 43.274950111245516
+
+Phase C:
+Starting event entrance for customer 4
+Adding new event to the list DEP1 32.977758427279596
+current count at event entrance: 2
+Simulation time: 30.749283767410365
+delay 0
+
+Phase A: the clock is 30.749283767410365
+
+Phase B:
+Removing from event list DEP1 30.749283767410365
+dep1: 3
+
+Phase C:
+Starting renewable energy stand for customer 3
+Adding new event to the list DEP2 41.47506389743454
+current count at renewable energy: 1
+Simulation time: 31.673903536539022
+delay 0
+
+Phase A: the clock is 31.673903536539022
+
+Phase B:
+Removing from event list DEP4 31.673903536539022
+
+Customer 2 finished! 
+Customer 2 arrived: 3.315895265459741
+Customer 2 exited: 31.673903536539022
+Customer 2 stayed: 28.35800827107928
+Average throughput time of customers so far 14.0
+exited customers: 1
+
+Phase C:
+Simulation time: 32.390436118837634
+delay 0
+
+Phase A: the clock is 32.390436118837634
+
+Phase B:
+Removing from event list DEP4 32.390436118837634
+
+Customer 1 finished! 
+Customer 1 arrived: 3.150012093190316
+Customer 1 exited: 32.390436118837634
+Customer 1 stayed: 29.240424025647318
+Average throughput time of customers so far 57.0
+exited customers: 2
+
+Phase C:
+Simulation time: 32.977758427279596
+delay 0
+
+Phase A: the clock is 32.977758427279596
+
+Phase B:
+Removing from event list DEP1 32.977758427279596
+dep1: 4
+
+Phase C:
+Starting renewable energy stand for customer 4
+Adding new event to the list DEP2 42.108992560338976
+current count at renewable energy: 2
+Simulation time: 41.47506389743454
+delay 0
+
+Phase A: the clock is 41.47506389743454
+
+Phase B:
+Removing from event list DEP2 41.47506389743454
+dep2: 3
+
+Phase C:
+Starting climate showcase room for customer 3
+Adding new event to the list DEP3 44.00801015632202
+current count at climate showcase room: 1
+Simulation time: 42.108992560338976
+delay 0
+
+Phase A: the clock is 42.108992560338976
+
+Phase B:
+Removing from event list DEP2 42.108992560338976
+dep2: 4
+
+Phase C:
+Starting climate showcase room for customer 4
+Adding new event to the list DEP3 44.36279674483955
+current count at climate showcase room: 2
+Simulation time: 43.274950111245516
+delay 0
+
+Phase A: the clock is 43.274950111245516
+
+Phase B:
+Removing from event list ARR1 43.274950111245516
+arr1: 5
+Adding new event to the list ARR1 48.1289591486908
+
+Phase C:
+Starting event entrance for customer 5
+Adding new event to the list DEP1 56.21628056339369
+current count at event entrance: 1
+Simulation time: 44.00801015632202
+delay 0
+
+Phase A: the clock is 44.00801015632202
+
+Phase B:
+Removing from event list DEP3 44.00801015632202
+dep3: 3
+
+Phase C:
+Starting main stage for customer 3
+Adding new event to the list DEP4 48.55965295285159
+current count at main stage: 1
+Simulation time: 44.36279674483955
+delay 0
+
+Phase A: the clock is 44.36279674483955
+
+Phase B:
+Removing from event list DEP3 44.36279674483955
+dep3: 4
+
+Phase C:
+Starting main stage for customer 4
+Adding new event to the list DEP4 49.04597654877751
+current count at main stage: 2
+Simulation time: 48.1289591486908
+delay 0
+
+Phase A: the clock is 48.1289591486908
+
+Phase B:
+Removing from event list ARR1 48.1289591486908
+arr1: 6
+Adding new event to the list ARR1 50.4247941348638
+
+Phase C:
+Starting event entrance for customer 6
+Adding new event to the list DEP1 54.90973137795183
+current count at event entrance: 2
+Simulation time: 48.55965295285159
+delay 0
+
+Phase A: the clock is 48.55965295285159
+
+Phase B:
+Removing from event list DEP4 48.55965295285159
+
+Customer 3 finished! 
+Customer 3 arrived: 20.30195958778225
+Customer 3 exited: 48.55965295285159
+Customer 3 stayed: 28.257693365069343
+Average throughput time of customers so far 28.333333333333332
+exited customers: 3
+
+Phase C:
+Simulation time: 49.04597654877751
+delay 0
+
+Phase A: the clock is 49.04597654877751
+
+Phase B:
+Removing from event list DEP4 49.04597654877751
+
+Customer 4 finished! 
+Customer 4 arrived: 26.726986429444246
+Customer 4 exited: 49.04597654877751
+Customer 4 stayed: 22.318990119333264
+Average throughput time of customers so far 26.75
+exited customers: 4
+
+Phase C:
+Simulation time: 50.4247941348638
+delay 0
+
+Phase A: the clock is 50.4247941348638
+
+Phase B:
+Removing from event list ARR1 50.4247941348638
+arr1: 7
+Adding new event to the list ARR1 55.69783247376222
+
+Phase C:
+Starting event entrance for customer 7
+Adding new event to the list DEP1 59.253935754522175
+current count at event entrance: 3
+Simulation time: 54.90973137795183
+delay 0
+
+Phase A: the clock is 54.90973137795183
+
+Phase B:
+Removing from event list DEP1 54.90973137795183
+dep1: 6
+
+Phase C:
+Starting renewable energy stand for customer 6
+Adding new event to the list DEP2 61.99079902165016
+current count at renewable energy: 1
+Simulation time: 55.69783247376222
+delay 0
+
+Phase A: the clock is 55.69783247376222
+
+Phase B:
+Removing from event list ARR1 55.69783247376222
+arr1: 8
+Adding new event to the list ARR1 65.62959076568583
+
+Phase C:
+Starting event entrance for customer 8
+Adding new event to the list DEP1 67.53053621278599
+current count at event entrance: 3
+Simulation time: 56.21628056339369
+delay 0
+
+Phase A: the clock is 56.21628056339369
+
+Phase B:
+Removing from event list DEP1 56.21628056339369
+dep1: 5
+
+Phase C:
+Starting renewable energy stand for customer 5
+Adding new event to the list DEP2 62.902085934412796
+current count at renewable energy: 2
+Simulation time: 59.253935754522175
+delay 0
+
+Phase A: the clock is 59.253935754522175
+
+Phase B:
+Removing from event list DEP1 59.253935754522175
+dep1: 7
+
+Phase C:
+Starting renewable energy stand for customer 7
+Adding new event to the list DEP2 66.75587079950779
+current count at renewable energy: 3
+Simulation time: 61.99079902165016
+delay 0
+
+Phase A: the clock is 61.99079902165016
+
+Phase B:
+Removing from event list DEP2 61.99079902165016
+dep2: 6
+
+Phase C:
+Starting climate showcase room for customer 6
+Adding new event to the list DEP3 68.01835289130402
+current count at climate showcase room: 1
+Simulation time: 62.902085934412796
+delay 0
+
+Phase A: the clock is 62.902085934412796
+
+Phase B:
+Removing from event list DEP2 62.902085934412796
+dep2: 5
+
+Phase C:
+Starting climate showcase room for customer 5
+Adding new event to the list DEP3 67.94249541050841
+current count at climate showcase room: 2
+Simulation time: 65.62959076568583
+delay 0
+
+Phase A: the clock is 65.62959076568583
+
+Phase B:
+Removing from event list ARR1 65.62959076568583
+arr1: 9
+Adding new event to the list ARR1 73.63665351191878
+
+Phase C:
+Starting event entrance for customer 9
+Adding new event to the list DEP1 80.27309480206793
+current count at event entrance: 2
+Simulation time: 66.75587079950779
+delay 0
+
+Phase A: the clock is 66.75587079950779
+
+Phase B:
+Removing from event list DEP2 66.75587079950779
+dep2: 7
+
+Phase C:
+Starting climate showcase room for customer 7
+Adding new event to the list DEP3 75.31823064035892
+current count at climate showcase room: 3
+Simulation time: 67.53053621278599
+delay 0
+
+Phase A: the clock is 67.53053621278599
+
+Phase B:
+Removing from event list DEP1 67.53053621278599
+dep1: 8
+
+Phase C:
+Starting renewable energy stand for customer 8
+Adding new event to the list DEP2 73.51079644560998
+current count at renewable energy: 1
+Simulation time: 67.94249541050841
+delay 0
+
+Phase A: the clock is 67.94249541050841
+
+Phase B:
+Removing from event list DEP3 67.94249541050841
+dep3: 5
+
+Phase C:
+Starting main stage for customer 5
+Adding new event to the list DEP4 70.90094848667837
+current count at main stage: 1
+Simulation time: 68.01835289130402
+delay 0
+
+Phase A: the clock is 68.01835289130402
+
+Phase B:
+Removing from event list DEP3 68.01835289130402
+dep3: 6
+
+Phase C:
+Starting main stage for customer 6
+Adding new event to the list DEP4 75.86702855648387
+current count at main stage: 2
+Simulation time: 70.90094848667837
+delay 0
+
+Phase A: the clock is 70.90094848667837
+
+Phase B:
+Removing from event list DEP4 70.90094848667837
+
+Customer 5 finished! 
+Customer 5 arrived: 43.274950111245516
+Customer 5 exited: 70.90094848667837
+Customer 5 stayed: 27.625998375432857
+Average throughput time of customers so far 26.8
+exited customers: 5
+
+Phase C:
+Simulation time: 73.51079644560998
+delay 0
+
+Phase A: the clock is 73.51079644560998
+
+Phase B:
+Removing from event list DEP2 73.51079644560998
+dep2: 8
+
+Phase C:
+Starting climate showcase room for customer 8
+Adding new event to the list DEP3 78.1824857912379
+current count at climate showcase room: 2
+Simulation time: 73.63665351191878
+delay 0
+
+Phase A: the clock is 73.63665351191878
+
+Phase B:
+Removing from event list ARR1 73.63665351191878
+arr1: 10
+Adding new event to the list ARR1 105.53408796353823
+
+Phase C:
+Starting event entrance for customer 10
+Adding new event to the list DEP1 80.03176451570488
+current count at event entrance: 2
+Simulation time: 75.31823064035892
+delay 0
+
+Phase A: the clock is 75.31823064035892
+
+Phase B:
+Removing from event list DEP3 75.31823064035892
+dep3: 7
+
+Phase C:
+Starting main stage for customer 7
+Adding new event to the list DEP4 79.47163735013513
+current count at main stage: 2
+Simulation time: 75.86702855648387
+delay 0
+
+Phase A: the clock is 75.86702855648387
+
+Phase B:
+Removing from event list DEP4 75.86702855648387
+
+Customer 6 finished! 
+Customer 6 arrived: 48.1289591486908
+Customer 6 exited: 75.86702855648387
+Customer 6 stayed: 27.738069407793077
+Average throughput time of customers so far 26.833333333333332
+exited customers: 6
+
+Phase C:
+Simulation time: 78.1824857912379
+delay 0
+
+Phase A: the clock is 78.1824857912379
+
+Phase B:
+Removing from event list DEP3 78.1824857912379
+dep3: 8
+
+Phase C:
+Starting main stage for customer 8
+Adding new event to the list DEP4 78.1067279565743
+current count at main stage: 2
+Simulation time: 78.1067279565743
+delay 0
+
+Phase A: the clock is 78.1067279565743
+
+Phase B:
+Removing from event list DEP4 78.1067279565743
+
+Customer 8 finished! 
+Customer 8 arrived: 55.69783247376222
+Customer 8 exited: 78.1067279565743
+Customer 8 stayed: 22.408895482812085
+Average throughput time of customers so far 22.875
+exited customers: 7
+
+Phase C:
+Simulation time: 79.47163735013513
+delay 0
+
+Phase A: the clock is 79.47163735013513
+
+Phase B:
+Removing from event list DEP4 79.47163735013513
+
+Customer 7 finished! 
+Customer 7 arrived: 50.4247941348638
+Customer 7 exited: 79.47163735013513
+Customer 7 stayed: 29.046843215271323
+Average throughput time of customers so far 30.285714285714285
+exited customers: 8
+
+Phase C:
+Simulation time: 80.03176451570488
+delay 0
+
+Phase A: the clock is 80.03176451570488
+
+Phase B:
+Removing from event list DEP1 80.03176451570488
+dep1: 10
+
+Phase C:
+Starting renewable energy stand for customer 10
+Adding new event to the list DEP2 89.4942139196768
+current count at renewable energy: 1
+Simulation time: 80.27309480206793
+delay 0
+
+Phase A: the clock is 80.27309480206793
+
+Phase B:
+Removing from event list DEP1 80.27309480206793
+dep1: 9
+
+Phase C:
+Starting renewable energy stand for customer 9
+Adding new event to the list DEP2 88.41909297806544
+current count at renewable energy: 2
+Simulation time: 88.41909297806544
+delay 0
+
+Phase A: the clock is 88.41909297806544
+
+Phase B:
+Removing from event list DEP2 88.41909297806544
+dep2: 9
+
+Phase C:
+Starting climate showcase room for customer 9
+Adding new event to the list DEP3 91.87361118572173
+current count at climate showcase room: 1
+Simulation time: 89.4942139196768
+delay 0
+
+Phase A: the clock is 89.4942139196768
+
+Phase B:
+Removing from event list DEP2 89.4942139196768
+dep2: 10
+
+Phase C:
+Starting climate showcase room for customer 10
+Adding new event to the list DEP3 93.26413090179584
+current count at climate showcase room: 2
+Simulation time: 91.87361118572173
+delay 0
+
+Phase A: the clock is 91.87361118572173
+
+Phase B:
+Removing from event list DEP3 91.87361118572173
+dep3: 9
+
+Phase C:
+Starting main stage for customer 9
+Adding new event to the list DEP4 99.06399390270877
+current count at main stage: 1
+Simulation time: 93.26413090179584
+delay 0
+
+Phase A: the clock is 93.26413090179584
+
+Phase B:
+Removing from event list DEP3 93.26413090179584
+dep3: 10
+
+Phase C:
+Starting main stage for customer 10
+Adding new event to the list DEP4 98.9255056022022
+current count at main stage: 2
+Simulation time: 98.9255056022022
+delay 0
+
+Phase A: the clock is 98.9255056022022
+
+Phase B:
+Removing from event list DEP4 98.9255056022022
+
+Customer 10 finished! 
+Customer 10 arrived: 73.63665351191878
+Customer 10 exited: 98.9255056022022
+Customer 10 stayed: 25.288852090283413
+Average throughput time of customers so far 23.7
+exited customers: 9
+
+Phase C:
+Simulation time: 99.06399390270877
+delay 0
+
+Phase A: the clock is 99.06399390270877
+
+Phase B:
+Removing from event list DEP4 99.06399390270877
+
+Customer 9 finished! 
+Customer 9 arrived: 65.62959076568583
+Customer 9 exited: 99.06399390270877
+Customer 9 stayed: 33.43440313702294
+Average throughput time of customers so far 30.0
+exited customers: 10
+
+Phase C:
+Simulation time: 105.53408796353823
+delay 0
+
+Phase A: the clock is 105.53408796353823
+
+Phase B:
+Removing from event list ARR1 105.53408796353823
+arr1: 11
+Adding new event to the list ARR1 108.64445584884359
+
+Phase C:
+Starting event entrance for customer 11
+Adding new event to the list DEP1 118.94459516617574
+current count at event entrance: 1
+Simulation time: 108.64445584884359
+Simulation ended at 105.53408796353823
+Results:
+A (Arrived Clients Count): 11
+C (Completed Clients Count): 10
+B (Active Service Time total): 287.1286846923824
+Active service times for each service point: 
+]]></system-out>
+    <system-err><![CDATA[Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.addCustomerView(simulation.view.CustomerView)" because the return value of "simulation.view.ISimulationUI.getEventEntrance()" is null
+	at simulation.controller.Controller.lambda$showNewCustomer$2(Controller.java:60)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" org.mockito.exceptions.misusing.NullInsteadOfMockException: 
+Argument passed to verify() should be a mock but is null!
+Examples of correct verifications:
+    verify(mock).someMethod();
+    verify(mock, times(10)).someMethod();
+    verify(mock, atLeastOnce()).someMethod();
+    not: verify(mock.someMethod());
+Also, if you use @Mock annotation don't miss openMocks()
+	at unit_tests.ControllerTest.lambda$testShowNewCustomer$0(ControllerTest.java:49)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.addCustomerView(simulation.view.CustomerView)" because the return value of "simulation.view.ISimulationUI.getEventEntrance()" is null
+	at simulation.controller.Controller.lambda$showNewCustomer$2(Controller.java:60)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.addCustomerView(simulation.view.CustomerView)" because the return value of "simulation.view.ISimulationUI.getEventEntrance()" is null
+	at simulation.controller.Controller.lambda$showNewCustomer$2(Controller.java:60)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.addCustomerView(simulation.view.CustomerView)" because the return value of "simulation.view.ISimulationUI.getEventEntrance()" is null
+	at simulation.controller.Controller.lambda$showNewCustomer$2(Controller.java:60)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.addCustomerView(simulation.view.CustomerView)" because the return value of "simulation.view.ISimulationUI.getEventEntrance()" is null
+	at simulation.controller.Controller.lambda$showNewCustomer$2(Controller.java:60)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.view.ISimulationUI.getMainStage()" is null
+	at simulation.controller.Controller.lambda$customerExit$4(Controller.java:78)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.view.ISimulationUI.getMainStage()" is null
+	at simulation.controller.Controller.lambda$customerExit$4(Controller.java:78)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.addCustomerView(simulation.view.CustomerView)" because the return value of "simulation.view.ISimulationUI.getEventEntrance()" is null
+	at simulation.controller.Controller.lambda$showNewCustomer$2(Controller.java:60)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.addCustomerView(simulation.view.CustomerView)" because the return value of "simulation.view.ISimulationUI.getEventEntrance()" is null
+	at simulation.controller.Controller.lambda$showNewCustomer$2(Controller.java:60)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.view.ISimulationUI.getMainStage()" is null
+	at simulation.controller.Controller.lambda$customerExit$4(Controller.java:78)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.view.ISimulationUI.getMainStage()" is null
+	at simulation.controller.Controller.lambda$customerExit$4(Controller.java:78)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.addCustomerView(simulation.view.CustomerView)" because the return value of "simulation.view.ISimulationUI.getEventEntrance()" is null
+	at simulation.controller.Controller.lambda$showNewCustomer$2(Controller.java:60)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.addCustomerView(simulation.view.CustomerView)" because the return value of "simulation.view.ISimulationUI.getEventEntrance()" is null
+	at simulation.controller.Controller.lambda$showNewCustomer$2(Controller.java:60)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.addCustomerView(simulation.view.CustomerView)" because the return value of "simulation.view.ISimulationUI.getEventEntrance()" is null
+	at simulation.controller.Controller.lambda$showNewCustomer$2(Controller.java:60)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.view.ISimulationUI.getMainStage()" is null
+	at simulation.controller.Controller.lambda$customerExit$4(Controller.java:78)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.addCustomerView(simulation.view.CustomerView)" because the return value of "simulation.view.ISimulationUI.getEventEntrance()" is null
+	at simulation.controller.Controller.lambda$showNewCustomer$2(Controller.java:60)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.view.ISimulationUI.getMainStage()" is null
+	at simulation.controller.Controller.lambda$customerExit$4(Controller.java:78)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.view.ISimulationUI.getMainStage()" is null
+	at simulation.controller.Controller.lambda$customerExit$4(Controller.java:78)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.view.ISimulationUI.getMainStage()" is null
+	at simulation.controller.Controller.lambda$customerExit$4(Controller.java:78)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.controller.Controller.getServicePointView(int)" is null
+	at simulation.controller.Controller.lambda$showCustomer$3(Controller.java:69)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+]]></system-err>
+  </testcase>
+  <testcase name="testShowCustomer" classname="unit_tests.ControllerTest" time="0.099">
+    <system-out><![CDATA[- Event Entrance busytime: 11.009464284497687, completed services: 10
+- Renewable energy stand busytime: 8.085020822517063, completed services: 10
+- Climate showcase room busytime: 4.680966342486849, completed services: 10
+- Main stage busytime: 4.937417019736645, completed services: 10
+T (Total Simulation Time): 105.53408796353823
+U (Service Point Utilization): 2.72
+X (Service Throughput): 0.09
+S (Average Service Time): 7.18
+R (Average Response Time): 30.0
+N (Average Queue Length): 3.62
+]]></system-out>
+    <system-err><![CDATA[Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.view.ISimulationUI.getMainStage()" is null
+	at simulation.controller.Controller.lambda$customerExit$4(Controller.java:78)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.removeCustomerView(simulation.view.CustomerView)" because the return value of "simulation.view.ISimulationUI.getMainStage()" is null
+	at simulation.controller.Controller.lambda$customerExit$4(Controller.java:78)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.addCustomerView(simulation.view.CustomerView)" because the return value of "simulation.view.ISimulationUI.getEventEntrance()" is null
+	at simulation.controller.Controller.lambda$showNewCustomer$2(Controller.java:60)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+]]></system-err>
+  </testcase>
+  <testcase name="testCustomerExit" classname="unit_tests.ControllerTest" time="0.004">
+    <system-err><![CDATA[Exception in thread "JavaFX Application Thread" java.lang.NullPointerException: Cannot invoke "simulation.view.ServicePointView.addCustomerView(simulation.view.CustomerView)" because the return value of "simulation.view.ISimulationUI.getEventEntrance()" is null
+	at simulation.controller.Controller.lambda$showNewCustomer$2(Controller.java:60)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:456)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:455)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+]]></system-err>
+  </testcase>
+</testsuite>

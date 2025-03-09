@@ -246,8 +246,13 @@ public class SimulationGUI extends Application implements ISimulationUI {
         return spv;
     }
 
+
     public void updateStatusLabel(String message) {
         Platform.runLater(() -> statusLabel.setText(message));
+    }
+
+    public Label getStatusLabel() {
+        return statusLabel;
     }
 
     @Override
@@ -276,8 +281,8 @@ public class SimulationGUI extends Application implements ISimulationUI {
 
         // 🔹 Etsitään vapaa palvelupiste
         for (ServicePointView spv : servicePointViews) {
-            if (spv.getChildren().size() < (int) spv.getUserData()) { // ✅ Ei täynnä
-                Platform.runLater(() -> spv.addCustomerView(customer)); // ✅ Oikea lisäysmetodi
+            if (spv.getChildren().size() < (int) spv.getUserData()) {
+                Platform.runLater(() -> spv.addCustomerView(customer));
                 return customer;
             }
         }
