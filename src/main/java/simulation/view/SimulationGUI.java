@@ -15,25 +15,20 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import simulation.controller.Controller;
 import simulation.controller.IControllerV;
+import javafx.scene.control.ListCell;
+
+import java.net.URL;
 
 public class SimulationGUI extends Application implements ISimulationUI {
     private IControllerV controller;
     private TextArea resultsArea;
-    ServicePointView[] servicePointViews = new ServicePointView[4];
-    Label statusLabel = new Label();
+    private final ServicePointView[] servicePointViews = new ServicePointView[4];
+    private final Label statusLabel = new Label();
     private TextField delay;
 
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Climate Conference Simulator");
-
-        // Styles
-        String buttonStyle = "-fx-background-color: linear-gradient(to right, #007bff, #0056b3); "
-                + "-fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 12px 20px; "
-                + "-fx-border-radius: 12px; -fx-background-radius: 12px; -fx-cursor: hand;";
-
-        String textFieldStyle = "-fx-background-color: #ffffff; -fx-border-color: #cccccc; "
-                + "-fx-border-radius: 10px; -fx-padding: 8px; -fx-font-size: 14px;";
 
         // Initialize the resultsTextArea
         resultsArea = new TextArea();
@@ -44,12 +39,11 @@ public class SimulationGUI extends Application implements ISimulationUI {
 
         // Simulation duration input field
         Label durationLabel = new Label("Simulation Duration:");
-        durationLabel.setFont(new Font(16));
+        durationLabel.setFont(new Font(18));
 
         TextField durationField = new TextField();
         durationField.setPromptText("Enter time...");
         durationField.setMaxWidth(200);
-        durationField.setStyle(textFieldStyle);
 
         // Capacity dropdowns
         ComboBox<Integer>[] numberDropdowns = new ComboBox[4];
@@ -61,88 +55,104 @@ public class SimulationGUI extends Application implements ISimulationUI {
                 "Main Stage"
         };
 
+        // Perfect alignment settings
+        double labelWidth = 200;
+        double dropdownWidth = 70;
+
+        // Loop through and style each dropdown
         for (int i = 0; i < numberDropdowns.length; i++) {
             numberDropdowns[i] = new ComboBox<>();
             for (int j = 1; j <= 10; j++) {
-                numberDropdowns[i].getItems().add(j); // Add numbers 1-10
+                numberDropdowns[i].getItems().add(j);
             }
-            numberDropdowns[i].setValue(1); // Set default value to 1
+            numberDropdowns[i].setValue(1);
+
+            // Set dropdown text color
+            numberDropdowns[i].setButtonCell(new ListCell<>() {
+                @Override
+                protected void updateItem(Integer item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText("");
+                    } else {
+                        setText(item.toString());
+                        setStyle("-fx-text-fill: #C0C0C0; -fx-font-size: 14px;");
+                    }
+                }
+            });
+
             dropdownLabels[i] = new Label(serviceNames[i]);
             dropdownLabels[i].setFont(new Font(16));
+            dropdownLabels[i].setMinWidth(labelWidth);
+            dropdownLabels[i].setAlignment(Pos.BASELINE_LEFT);
+            dropdownLabels[i].setStyle("-fx-text-fill: #C0C0C0; -fx-font-weight: bold;"); // ✅ Bright blue text!
+
+            numberDropdowns[i].setMinWidth(dropdownWidth);
+            numberDropdowns[i].setMaxWidth(dropdownWidth);
+            numberDropdowns[i].setStyle(
+                    "-fx-background-color: #0D1A44;" +
+                            "-fx-border-color: #C0C0C0;" +
+                            "-fx-border-radius: 5px;" +
+                            "-fx-text-fill: #C0C0C0;" +
+                            "-fx-font-size: 14px;"
+            );
         }
 
-        HBox numberDropdownBox1 = new HBox(10);
-        numberDropdownBox1.setAlignment(Pos.CENTER);
-        numberDropdownBox1.getChildren().addAll(dropdownLabels[0], numberDropdowns[0]);
+        GridPane dropdownGrid = new GridPane();
+        dropdownGrid.setHgap(15); // Välit
+        dropdownGrid.setVgap(12);
+        dropdownGrid.setAlignment(Pos.CENTER);
+        dropdownGrid.getStyleClass().add("dropdown-container");
+        dropdownGrid.setPadding(new Insets(-40, 0, 10, 0));
 
-        HBox numberDropdownBox2 = new HBox(10);
-        numberDropdownBox2.setAlignment(Pos.CENTER);
-        numberDropdownBox2.getChildren().addAll(dropdownLabels[1], numberDropdowns[1]);
-
-        HBox numberDropdownBox3 = new HBox(10);
-        numberDropdownBox3.setAlignment(Pos.CENTER);
-        numberDropdownBox3.getChildren().addAll(dropdownLabels[2], numberDropdowns[2]);
-
-        HBox numberDropdownBox4 = new HBox(10);
-        numberDropdownBox4.setAlignment(Pos.CENTER);
-        numberDropdownBox4.getChildren().addAll(dropdownLabels[3], numberDropdowns[3]);
-
-        VBox numberDropdownBox = new VBox(10);
-        numberDropdownBox.setAlignment(Pos.CENTER);
-        numberDropdownBox.getChildren().addAll(
-                numberDropdownBox1,
-                numberDropdownBox2,
-                numberDropdownBox3,
-                numberDropdownBox4
-        );
-
-        // Add listeners to the dropdown boxes to update the capacity dynamically
         for (int i = 0; i < numberDropdowns.length; i++) {
-            final int index = i;
-            numberDropdowns[i].valueProperty().addListener((obs, oldVal, newVal) -> {
-                servicePointViews[index].setUserData(newVal);
-            });
+            dropdownGrid.add(dropdownLabels[i], 0, i);
+            dropdownGrid.add(numberDropdowns[i], 1, i);
         }
 
-        VBox searchBox = new VBox(10, durationLabel, durationField);
+        VBox searchBox = new VBox(10, durationLabel, durationField, dropdownGrid);
+        searchBox.setSpacing(8);
         searchBox.setAlignment(Pos.CENTER);
+        searchBox.setPadding(new Insets(0, 0, 70, 0)); // Moves it UP
+
+        // Textfield for delay
+        Label delayLabel = new Label("Delay:");
+        delay = new TextField();
+        delay.setPromptText("Set delay...");
+        statusLabel.setAlignment(Pos.CENTER);
 
         // Button for slowing down simulation
         Button slowdownBtn = new Button("Slow down");
         slowdownBtn.setOnAction(e -> controller.slowDown());
-        slowdownBtn.setStyle(buttonStyle);
 
         // Button for speeding up simulation
         Button speedupBtn = new Button("Speed up");
         speedupBtn.setOnAction(e -> controller.speedUp());
-        speedupBtn.setStyle(buttonStyle);
-
-        // textfield for delay
-        Label delayLabel = new Label("Delay:");
-        delay = new TextField("Set delay...");
-        delay.setStyle(textFieldStyle);
 
         // Start Simulation button
         Button startButton = new Button("Start Simulation");
-        startButton.setFont(new Font(14));
-        startButton.setStyle(buttonStyle);
+        startButton.getStyleClass().add("start-button");
 
-        HBox buttonBox = new HBox(10,delayLabel,delay,slowdownBtn,speedupBtn,startButton);
+        // Alkuperäinen buttonBox
+        HBox buttonBox = new HBox(15, delayLabel, delay, slowdownBtn, speedupBtn, startButton);
         buttonBox.setAlignment(Pos.CENTER);
 
+        // Reduce spacing even more to bring buttons closer
+        VBox buttonContainer = new VBox(40, buttonBox);
+        buttonBox.setSpacing(8);
+        buttonContainer.setPadding(new Insets(20, 0, 0, 0));
 
-
-        // Service Point views (fixed size, no stretching)
-        servicePointViews[0] = createStyledServicePoint("Event Entrance", "#42a5f5",numberDropdowns[0].getValue());
-        servicePointViews[1] = createStyledServicePoint("Renewable Energy Stand", "#66bb6a",numberDropdowns[1].getValue());
-        servicePointViews[2] = createStyledServicePoint("Climate Showcase Room", "#ffa726",numberDropdowns[2].getValue());
-        servicePointViews[3] = createStyledServicePoint("Main Stage", "#ab47bc",numberDropdowns[3].getValue());
+        // Create and apply correct colors for service point views
+        servicePointViews[0] = createStyledServicePoint("Event Entrance", "event-entrance", numberDropdowns[0].getValue());
+        servicePointViews[1] = createStyledServicePoint("Renewable Energy Stand", "renewable-energy", numberDropdowns[1].getValue());
+        servicePointViews[2] = createStyledServicePoint("Climate Showcase Room", "climate-showcase", numberDropdowns[2].getValue());
+        servicePointViews[3] = createStyledServicePoint("Main Stage", "main-stage", numberDropdowns[3].getValue());
 
         // Prevent stretching
         for (ServicePointView spv : servicePointViews) {
-            spv.setMaxSize(200, 150); // Max size
-            spv.setPrefSize(200, 150); // Fixed size
-            spv.setMinSize(200, 150); // Min size, prevents shrinking
+            spv.setMaxSize(200, 150);
+            spv.setPrefSize(200, 150);
+            spv.setMinSize(200, 150);
         }
 
         GridPane serviceGrid = new GridPane();
@@ -155,15 +165,13 @@ public class SimulationGUI extends Application implements ISimulationUI {
         serviceGrid.add(servicePointViews[2], 0, 1);
         serviceGrid.add(servicePointViews[3], 1, 1);
 
-        // Main layout
-        VBox rightLayout = new VBox(30);
+        // MAIN LAYOUT
+        VBox rightLayout = new VBox(5);
         rightLayout.setAlignment(Pos.CENTER);
-        rightLayout.setStyle("-fx-padding: 50px; -fx-background-color: #f4f4f4;");
-        rightLayout.getChildren().addAll(searchBox, numberDropdownBox, buttonBox, statusLabel, serviceGrid);
+        rightLayout.getChildren().addAll(searchBox, dropdownGrid, buttonContainer, statusLabel, serviceGrid);
 
         HBox mainLayout = new HBox(30);
         mainLayout.setAlignment(Pos.CENTER);
-        mainLayout.setStyle("-fx-padding: 50px; -fx-background-color: #f4f4f4;");
         mainLayout.getChildren().addAll(resultsArea, rightLayout);
 
         StackPane root = new StackPane(mainLayout);
@@ -171,6 +179,15 @@ public class SimulationGUI extends Application implements ISimulationUI {
 
         // Scene and window settings
         Scene scene = new Scene(root, 1000, 700);
+
+        URL cssURL = getClass().getResource("/styles/style.css");
+        if (cssURL != null) {
+            scene.getStylesheets().add(cssURL.toExternalForm());
+            System.out.println("CSS Loaded: " + cssURL);
+        } else {
+            System.err.println("ERROR: style.css not found! Check file path.");
+        }
+
         primaryStage.setScene(scene);
         primaryStage.setMinWidth(800);
         primaryStage.setMinHeight(600);
@@ -178,7 +195,6 @@ public class SimulationGUI extends Application implements ISimulationUI {
         primaryStage.show();
 
         controller = new Controller(this, this);
-
 
         // Button functionality
         startButton.setOnAction(e -> {
@@ -209,36 +225,29 @@ public class SimulationGUI extends Application implements ISimulationUI {
         });
     }
 
-
-    // Service Point component styles
-    private ServicePointView createStyledServicePoint(String name, String color, int capacity) {
+    private ServicePointView createStyledServicePoint(String name, String cssClass, int capacity) {
         ServicePointView spv = new ServicePointView(name);
-        spv.setStyle("-fx-background-color: " + color + "; " +
-                "-fx-padding: 20px; -fx-border-color: white; " +
-                "-fx-border-radius: 15px; -fx-background-radius: 15px; " +
-                "-fx-font-size: 14px; -fx-text-fill: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 3, 3);");
+        spv.setAlignment(Pos.BASELINE_LEFT); // Force text alignment inside the box
+        spv.setUserData(capacity);
 
-        // Prevent excessive number of customers
-        spv.setMaxHeight(150); // Limit height
-        spv.setMinHeight(150); // Prevent shrinking
-        spv.setMaxWidth(200); // Limit width
+        spv.getStyleClass().add("service-point");
+        spv.getStyleClass().add(cssClass);
+
+        spv.getChildren().get(0).setTranslateX(-10);
+
+        // Size restrictions
+        spv.setMaxHeight(150);
+        spv.setMinHeight(150);
+        spv.setMaxWidth(200);
         spv.setMinWidth(200);
 
-        // Add max 8 balls per box
         spv.setUserData(capacity);
 
         return spv;
     }
 
-
-
-    // Method to update the status label
     public void updateStatusLabel(String message) {
         Platform.runLater(() -> statusLabel.setText(message));
-    }
-
-    public Label getStatusLabel() {
-        return statusLabel;
     }
 
     @Override
@@ -263,7 +272,18 @@ public class SimulationGUI extends Application implements ISimulationUI {
 
     @Override
     public CustomerView getCustomer(int id) {
-        return new CustomerView(id);
+        CustomerView customer = new CustomerView(id);
+
+        // 🔹 Etsitään vapaa palvelupiste
+        for (ServicePointView spv : servicePointViews) {
+            if (spv.getChildren().size() < (int) spv.getUserData()) { // ✅ Ei täynnä
+                Platform.runLater(() -> spv.addCustomerView(customer)); // ✅ Oikea lisäysmetodi
+                return customer;
+            }
+        }
+
+        System.out.println("⚠ Ei tilaa palvelupisteissä asiakkaalle " + id);
+        return customer;
     }
 
     public void updateResults(String message) {
@@ -271,7 +291,7 @@ public class SimulationGUI extends Application implements ISimulationUI {
     }
 
     @Override
-    public long getDelay(){
+    public long getDelay() {
         return Long.parseLong(delay.getText());
     }
 
