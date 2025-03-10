@@ -276,19 +276,8 @@ public class SimulationGUI extends Application implements ISimulationUI {
     }
 
     @Override
-    public CustomerView getCustomer(int id) {
-        CustomerView customer = new CustomerView(id);
-
-        // 🔹 Etsitään vapaa palvelupiste
-        for (ServicePointView spv : servicePointViews) {
-            if (spv.getChildren().size() < (int) spv.getUserData()) {
-                Platform.runLater(() -> spv.addCustomerView(customer));
-                return customer;
-            }
-        }
-
-        System.out.println("⚠ Ei tilaa palvelupisteissä asiakkaalle " + id);
-        return customer;
+    public CustomerView getCustomer(int id, CustomerType type) {
+        return new CustomerView(id, type);
     }
 
     public void updateResults(String message) {
