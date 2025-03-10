@@ -18,6 +18,7 @@ import simulation.controller.IControllerV;
 import simulation.model.CustomerType;
 import javafx.scene.control.ListCell;
 import java.net.URL;
+import java.util.Arrays;
 
 public class SimulationGUI extends Application implements ISimulationUI {
     private IControllerV controller;
@@ -98,6 +99,13 @@ public class SimulationGUI extends Application implements ISimulationUI {
             );
         }
 
+        for (int i = 0; i < numberDropdowns.length; i++) {
+            final int index = i;
+            numberDropdowns[i].valueProperty().addListener((obs, oldVal, newVal) -> {
+                servicePointViews[index].setUserData(newVal);
+            });
+        }
+
         GridPane dropdownGrid = new GridPane();
         dropdownGrid.setHgap(15); // Välit
         dropdownGrid.setVgap(12);
@@ -142,11 +150,16 @@ public class SimulationGUI extends Application implements ISimulationUI {
         buttonBox.setSpacing(8);
         buttonContainer.setPadding(new Insets(20, 0, 0, 0));
 
-        // Create and apply correct colors for service point views
-        servicePointViews[0] = createStyledServicePoint("Event Entrance", "event-entrance", numberDropdowns[0].getValue());
-        servicePointViews[1] = createStyledServicePoint("Renewable Energy Stand", "renewable-energy", numberDropdowns[1].getValue());
-        servicePointViews[2] = createStyledServicePoint("Climate Showcase Room", "climate-showcase", numberDropdowns[2].getValue());
-        servicePointViews[3] = createStyledServicePoint("Main Stage", "main-stage", numberDropdowns[3].getValue());
+        int[] dropcapacities = new int[numberDropdowns.length];
+        for (int i = 0; i < numberDropdowns.length; i++) {
+            dropcapacities[i] = numberDropdowns[i].getValue();
+        }
+
+        // Create and apply correct colors for service point views with capacities
+        servicePointViews[0] = createStyledServicePoint("Event Entrance", "event-entrance", dropcapacities[0]);
+        servicePointViews[1] = createStyledServicePoint("Renewable Energy Stand", "renewable-energy", dropcapacities[1]);
+        servicePointViews[2] = createStyledServicePoint("Climate Showcase Room", "climate-showcase", dropcapacities[2]);
+        servicePointViews[3] = createStyledServicePoint("Main Stage", "main-stage", dropcapacities[3]);
 
         // Prevent stretching
         for (ServicePointView spv : servicePointViews) {
@@ -206,6 +219,7 @@ public class SimulationGUI extends Application implements ISimulationUI {
                 for (int i = 0; i < numberDropdowns.length; i++) {
                     capacities[i] = numberDropdowns[i].getValue();
 
+
                     // Check that capacities are higher than 1, to avoid 0 results
                     if (capacities[i] <= 1) {
                         validCapacities = false;
@@ -227,13 +241,13 @@ public class SimulationGUI extends Application implements ISimulationUI {
 
     private ServicePointView createStyledServicePoint(String name, String cssClass, int capacity) {
         ServicePointView spv = new ServicePointView(name);
-        spv.setAlignment(Pos.BASELINE_LEFT); // Force text alignment inside the box
+        //spv.setAlignment(Pos.BASELINE_LEFT); // Force text alignment inside the box
         spv.setUserData(capacity);
 
         spv.getStyleClass().add("service-point");
         spv.getStyleClass().add(cssClass);
 
-        spv.getChildren().get(0).setTranslateX(-10);
+        //spv.getChildren().get(0).setTranslateX(-10);
 
         // Size restrictions
         spv.setMaxHeight(150);
@@ -241,7 +255,7 @@ public class SimulationGUI extends Application implements ISimulationUI {
         spv.setMaxWidth(200);
         spv.setMinWidth(200);
 
-        spv.setUserData(capacity);
+        //spv.setUserData(capacity);
 
         return spv;
     }
