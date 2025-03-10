@@ -70,7 +70,9 @@ public class RenewableEnergyStand extends ServicePoint {
         }
 
         for (Customer c : processing) {
-            this.addToQueue(c);
+            if (!getQueue().contains(c)) {
+                this.addToQueue(c);
+            }
         }
 
 

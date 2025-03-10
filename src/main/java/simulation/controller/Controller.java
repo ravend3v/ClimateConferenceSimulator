@@ -2,6 +2,7 @@ package simulation.controller;
 
 import javafx.application.Platform;
 import simulation.framework.IMotor;
+import simulation.model.CustomerType;
 import simulation.model.OwnMotor;
 import simulation.view.CustomerView;
 import simulation.view.ISimulationUI;
@@ -26,19 +27,29 @@ public class Controller implements IControllerM,IControllerV{
 
     @Override
     public void startSimulation(double time,int[] capacities){
+        try {
+            clearVisibleClients();
+            motor = new OwnMotor(this, capacities, getAllServicePointViews());
+            motor.setSimulationTime(time);
+            motor.setDelay(ui.getDelay());
+            new Thread(() -> {
+                try {
+                    motor.run();
+                    Platform.runLater(() -> updateStatusLabel("Simulation Completed!"));
 
-        motor = new OwnMotor(this,capacities,getAllServicePointViews());
-        motor.setSimulationTime(time);
-        motor.setDelay(ui.getDelay());
-        new Thread(() -> {
-            motor.run();
-            Platform.runLater(() -> updateStatusLabel("Simulation Completed!"));
-
-            // Cast the motor to OwnMotor to access the required method
-            if (motor instanceof OwnMotor) {
-                gui.updateResults("Simulation Results:\n" + ((OwnMotor) motor).getResults());
-            }
-        }).start();
+                    // Cast the motor to OwnMotor to access the required method
+                    if (motor instanceof OwnMotor) {
+                        gui.updateResults("Simulation Results:\n" + ((OwnMotor) motor).getResults());
+                    }
+                } catch (Exception e) {
+                    Platform.runLater(() -> updateStatusLabel("Error during simulation: " + e.getMessage()));
+                    e.printStackTrace();
+                }
+            }).start();
+        } catch (Exception e) {
+            updateStatusLabel("Error starting simulation");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -54,8 +65,8 @@ public class Controller implements IControllerM,IControllerV{
 
     // uuden asiakkaan lisäys
     @Override
-    public void showNewCustomer(int customerId){
-        CustomerView cView = ui.getCustomer(customerId);
+    public void showNewCustomer(int customerId, CustomerType type){
+        CustomerView cView = ui.getCustomer(customerId, type);
         customerViews.put(customerId,cView);
         Platform.runLater(() -> ui.getEventEntrance().addCustomerView(cView));
 
@@ -90,14 +101,22 @@ public class Controller implements IControllerM,IControllerV{
     }
 
     public ServicePointView[] getAllServicePointViews(){
-        ServicePointView[] servicePointViews = {ui.getEventEntrance(),
-                                                ui.getRenewable(),
-                                                ui.getShowRoom(),
-                                                ui.getMainStage()};
+        ServicePointView[] servicePointViews = {
+                ui.getEventEntrance(),
+                ui.getRenewable(),
+                ui.getShowRoom(),
+                ui.getMainStage()};
         return servicePointViews;
     }
 
-
+    public void clearVisibleClients() {
+        Platform.runLater(() -> {
+            ui.getEventEntrance().clearCustomerViews();
+            ui.getRenewable().clearCustomerViews();
+            ui.getShowRoom().clearCustomerViews();
+            ui.getMainStage().clearCustomerViews();
+        });
+    }
 
     @Override
     public void updateStatusLabel(String message) {

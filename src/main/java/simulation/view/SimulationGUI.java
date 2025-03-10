@@ -15,8 +15,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import simulation.controller.Controller;
 import simulation.controller.IControllerV;
+import simulation.model.CustomerType;
 import javafx.scene.control.ListCell;
-
 import java.net.URL;
 
 public class SimulationGUI extends Application implements ISimulationUI {
