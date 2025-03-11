@@ -35,6 +35,7 @@ public abstract class Motor extends Thread implements IMotor{
     public void run() {
         initialize(); // Create the first event, among other things
         while (isSimulating()) {
+            defaultDelay();
             delay();
             Trace.out(Trace.Level.INFO, "\nPhase A: the clock is " + currentTime());
             clock.setTime(currentTime());
@@ -73,6 +74,15 @@ public abstract class Motor extends Thread implements IMotor{
     // Method to update the UI with the current simulation time
     protected void updateUI(double time) {
         // Override this method in the subclasses to update UI
+    }
+
+    private void defaultDelay(){
+
+        try {
+            sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void delay(){
