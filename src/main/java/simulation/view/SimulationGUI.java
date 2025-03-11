@@ -319,7 +319,7 @@ public class SimulationGUI extends Application implements ISimulationUI {
         simulationTime = 0.0;
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             simulationTime += 1.0;
-            clockLabel.setText(String.format("Simulation Time: %.1fs", simulationTime));
+            controller.updateClock();
             if (simulationTime >= duration) {
                 stopClock();
                 chatterDisplayUtils.stopChatterTimeline();
@@ -333,6 +333,10 @@ public class SimulationGUI extends Application implements ISimulationUI {
         if (timeline != null) {
             timeline.stop();
         }
+    }
+
+    public void updateClockLabel(String time) {
+        clockLabel.setText(time);
     }
 
     public void updateStatusLabel(String message) {

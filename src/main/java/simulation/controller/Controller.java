@@ -1,6 +1,7 @@
 package simulation.controller;
 
 import javafx.application.Platform;
+import simulation.framework.Clock;
 import simulation.framework.IMotor;
 import simulation.model.CustomerType;
 import simulation.model.OwnMotor;
@@ -32,6 +33,7 @@ public class Controller implements IControllerM,IControllerV{
             motor = new OwnMotor(this, capacities, getAllServicePointViews());
             motor.setSimulationTime(time);
             motor.setDelay(ui.getDelay());
+            //startClockUpdate();
             new Thread(() -> {
                 try {
                     motor.run();
@@ -121,6 +123,14 @@ public class Controller implements IControllerM,IControllerV{
     @Override
     public void updateStatusLabel(String message) {
         gui.updateStatusLabel(message);
+    }
+
+    @Override
+    public void updateClock() {
+        Platform.runLater(() -> {
+            double currentTime = Clock.getInstance().getTime();
+            gui.updateClockLabel(String.format("Simulation Time: %.1fs", currentTime));
+        });
     }
 
 }
