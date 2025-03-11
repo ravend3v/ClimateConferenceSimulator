@@ -113,7 +113,7 @@ public class OwnMotor extends Motor {
 	}
 
 	public String getResults() {
-		return simulationResults.getResultsAsString();
+		return simulationResults.fetchResultsFromDatabase();
 	}
 
 	@Override

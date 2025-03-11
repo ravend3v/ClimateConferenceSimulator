@@ -1,6 +1,8 @@
 package simulation.model;
 import eduni.distributions.*;
 
+import java.util.Random;
+
 public class CustomerDistribution {
     private Uniform typeDistribution;
 
@@ -12,4 +14,10 @@ public class CustomerDistribution {
         int number =  (int) Math.round(typeDistribution.sample());
         return number;
     }
+
+
+
+
+
+
 }
