@@ -96,7 +96,7 @@ public class SimulationGUI extends Application implements ISimulationUI {
                         setText("");
                     } else {
                         setText(item.toString());
-                        setStyle("-fx-text-fill: black; -fx-font-size: 14px;");
+                        setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
                     }
                 }
             });
@@ -110,10 +110,11 @@ public class SimulationGUI extends Application implements ISimulationUI {
             numberDropdowns[i].setMinWidth(dropdownWidth);
             numberDropdowns[i].setMaxWidth(dropdownWidth);
             numberDropdowns[i].setStyle(
-                    "-fx-background-color: white;" +
-                            "-fx-border-color: #493D9E;" +
+                    "-fx-background-color: linear-gradient(to bottom, #4A0066, #220033);" +
+                            "-fx-border-color: #D269FF;" +
+                            "    -fx-effect: dropshadow(gaussian, rgba(210, 105, 255, 0.9), 20, 0.7, 0, 0);" +
                             "-fx-border-radius: 5px;" +
-                            "-fx-text-fill: black;" +
+                            "-fx-text-fill: white;" +
                             "-fx-font-size: 14px;"
             );
         }
@@ -218,7 +219,7 @@ public class SimulationGUI extends Application implements ISimulationUI {
         chatterArea.setWrapText(true);
         chatterArea.setPrefHeight(200);
         chatterArea.setPrefWidth(300);
-        chatterArea.setStyle("-fx-background-color: #F2F2F2; -fx-text-fill: black; -fx-border-color: #493D9E; -fx-border-width: 2px;");
+        chatterArea.getStyleClass().add("text-area");
 
         // Chatter Area Title
         Label chatterTitle = new Label("Conference Chatter");

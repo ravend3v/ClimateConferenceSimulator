@@ -16,11 +16,12 @@
 
 /* 🔥 Buttons - Elegant & Sharp (Fixed Background & Size) */
 .button {
-    -fx-background-color: white; /* Button Background */
-    -fx-text-fill: black;
+    -fx-background-color: linear-gradient(to bottom, #4A0066, #220033);
+    -fx-border-color: #D269FF;
+    -fx-effect: dropshadow(gaussian, rgba(210, 105, 255, 0.9), 20, 0.7, 0, 0); /* Results Area Background */
+    -fx-text-fill: white;
     -fx-font-size: 16px;
     -fx-border-width: 2px;
-    -fx-border-color: #493D9E;
     -fx-border-radius: 8px;
     -fx-background-radius: 8px;
     -fx-pref-height: 38px;
@@ -32,14 +33,15 @@
 /* ✨ Button Hover Effects */
 .button:hover {
     -fx-background-color: #493D9E; /* Hover Background */
-    -fx-text-fill: black;
+    -fx-text-fill: white;
 }
 
 /* 🍃 Start Simulation - Subtle Style */
 .start-button {
-    -fx-background-color: white;
-    -fx-border-color: #493D9E;
-    -fx-text-fill: black;
+    -fx-background-color: linear-gradient(to bottom, #4A0066, #220033);
+    -fx-border-color: #D269FF;
+    -fx-effect: dropshadow(gaussian, rgba(210, 105, 255, 0.9), 20, 0.7, 0, 0); /* Results Area Background */
+    -fx-text-fill: white;
     -fx-pref-height: 40px;
     -fx-pref-width: 180px;
     -fx-font-size: 17px;
@@ -71,7 +73,7 @@
     -fx-background-color: linear-gradient(to bottom, #4A0066, #220033);
     -fx-border-color: #D269FF;
     -fx-effect: dropshadow(gaussian, rgba(210, 105, 255, 0.9), 20, 0.7, 0, 0); /* Results Area Background */
-    -fx-text-fill: white;
+    -fx-text-fill: white; /* Ensure text color is white */
     -fx-font-size: 16px;
     -fx-border-width: 2px;
     -fx-padding: 10px;
@@ -80,7 +82,7 @@
 /* 📌 Text Area Content */
 .text-area .content {
     -fx-background-color: linear-gradient(to bottom, #4A0066, #220033);
-    -fx-text-fill: white;
+    -fx-text-fill: white; /* Ensure text color is white */
 }
 
 /* 🏷️ Labels - Sharp & Readable */
@@ -119,7 +121,7 @@
     -fx-background-radius: 12px;
     -fx-padding: 12px;
     -fx-font-size: 18px;
-    -fx-fill: white;
+    -fx-text-fill: white; /* Changed from -fx-fill to -fx-text-fill */
     -fx-font-weight: bold;
 }
 
