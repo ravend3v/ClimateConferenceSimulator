@@ -1,24 +1,26 @@
+// File: src/main/java/simulation/view/SimulationGUI.java
 package simulation.view;
 
-import javafx.application.Application;
-import javafx.application.Platform;
+import javafx.animation.*;
+import javafx.application.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
 import simulation.controller.Controller;
 import simulation.controller.IControllerV;
 import simulation.model.CustomerType;
-import javafx.scene.control.ListCell;
+
+import database.DatabaseUtils;
+import utils.ChatterDisplayUtils;
+
 import java.net.URL;
-import java.util.Arrays;
+import java.util.List;
 
 public class SimulationGUI extends Application implements ISimulationUI {
     private IControllerV controller;
@@ -26,6 +28,15 @@ public class SimulationGUI extends Application implements ISimulationUI {
     private final ServicePointView[] servicePointViews = new ServicePointView[4];
     private final Label statusLabel = new Label();
     private TextField delay;
+    private TextArea chatterArea;
+    private Label clockLabel;
+    private Timeline timeline;
+    private double simulationTime;
+
+    // Database chatter
+    private DatabaseUtils mongoDBConnection;
+    private List<String> chatterMessages;
+    private ChatterDisplayUtils chatterDisplayUtils;
 
     @Override
     public void start(Stage primaryStage) {
@@ -36,15 +47,23 @@ public class SimulationGUI extends Application implements ISimulationUI {
         resultsArea.setFont(new Font(16));
         resultsArea.setEditable(false);
         resultsArea.setWrapText(true);
-        resultsArea.setPrefHeight(200);
+        resultsArea.setPrefHeight(700); // Adjust height to match the window
+        resultsArea.setPrefWidth(300); // Adjust width as needed
+
+        // Results Area Title
+        Label resultsTitle = new Label("Results / Output Area");
+        resultsTitle.setFont(new Font(18));
+        resultsTitle.setStyle("-fx-text-fill: black;");
 
         // Simulation duration input field
         Label durationLabel = new Label("Simulation Duration:");
         durationLabel.setFont(new Font(18));
+        durationLabel.setStyle("-fx-text-fill: black;");
 
         TextField durationField = new TextField();
         durationField.setPromptText("Enter time...");
         durationField.setMaxWidth(200);
+        durationField.setStyle("-fx-text-fill: black;");
 
         // Capacity dropdowns
         ComboBox<Integer>[] numberDropdowns = new ComboBox[4];
@@ -77,7 +96,7 @@ public class SimulationGUI extends Application implements ISimulationUI {
                         setText("");
                     } else {
                         setText(item.toString());
-                        setStyle("-fx-text-fill: #C0C0C0; -fx-font-size: 14px;");
+                        setStyle("-fx-text-fill: black; -fx-font-size: 14px;");
                     }
                 }
             });
@@ -86,15 +105,15 @@ public class SimulationGUI extends Application implements ISimulationUI {
             dropdownLabels[i].setFont(new Font(16));
             dropdownLabels[i].setMinWidth(labelWidth);
             dropdownLabels[i].setAlignment(Pos.BASELINE_LEFT);
-            dropdownLabels[i].setStyle("-fx-text-fill: #C0C0C0; -fx-font-weight: bold;"); // ✅ Bright blue text!
+            dropdownLabels[i].setStyle("-fx-text-fill: black; -fx-font-weight: bold;");
 
             numberDropdowns[i].setMinWidth(dropdownWidth);
             numberDropdowns[i].setMaxWidth(dropdownWidth);
             numberDropdowns[i].setStyle(
-                    "-fx-background-color: #0D1A44;" +
-                            "-fx-border-color: #C0C0C0;" +
+                    "-fx-background-color: white;" +
+                            "-fx-border-color: #493D9E;" +
                             "-fx-border-radius: 5px;" +
-                            "-fx-text-fill: #C0C0C0;" +
+                            "-fx-text-fill: black;" +
                             "-fx-font-size: 14px;"
             );
         }
@@ -107,11 +126,11 @@ public class SimulationGUI extends Application implements ISimulationUI {
         }
 
         GridPane dropdownGrid = new GridPane();
-        dropdownGrid.setHgap(15); // Välit
+        dropdownGrid.setHgap(15);
         dropdownGrid.setVgap(12);
         dropdownGrid.setAlignment(Pos.CENTER);
         dropdownGrid.getStyleClass().add("dropdown-container");
-        dropdownGrid.setPadding(new Insets(-40, 0, 10, 0));
+        dropdownGrid.setPadding(new Insets(10, 0, 10, 0));
 
         for (int i = 0; i < numberDropdowns.length; i++) {
             dropdownGrid.add(dropdownLabels[i], 0, i);
@@ -121,13 +140,16 @@ public class SimulationGUI extends Application implements ISimulationUI {
         VBox searchBox = new VBox(10, durationLabel, durationField, dropdownGrid);
         searchBox.setSpacing(8);
         searchBox.setAlignment(Pos.CENTER);
-        searchBox.setPadding(new Insets(0, 0, 70, 0)); // Moves it UP
+        searchBox.setPadding(new Insets(0, 0, 20, 0));
 
         // Textfield for delay
         Label delayLabel = new Label("Delay:");
+        delayLabel.setStyle("-fx-text-fill: black;");
         delay = new TextField();
         delay.setPromptText("Set delay...");
+        delay.setStyle("-fx-text-fill: black;");
         statusLabel.setAlignment(Pos.CENTER);
+        statusLabel.setStyle("-fx-text-fill: black;");
 
         // Button for slowing down simulation
         Button slowdownBtn = new Button("Slow down");
@@ -141,13 +163,18 @@ public class SimulationGUI extends Application implements ISimulationUI {
         Button startButton = new Button("Start Simulation");
         startButton.getStyleClass().add("start-button");
 
-        // Alkuperäinen buttonBox
-        HBox buttonBox = new HBox(15, delayLabel, delay, slowdownBtn, speedupBtn, startButton);
-        buttonBox.setAlignment(Pos.CENTER);
+        // Use GridPane for better layout
+        GridPane buttonGrid = new GridPane();
+        buttonGrid.setHgap(10);
+        buttonGrid.setVgap(10);
+        buttonGrid.setAlignment(Pos.CENTER);
+        buttonGrid.add(delayLabel, 0, 0);
+        buttonGrid.add(delay, 1, 0);
+        buttonGrid.add(slowdownBtn, 0, 1);
+        buttonGrid.add(speedupBtn, 1, 1);
+        buttonGrid.add(startButton, 0, 2, 2, 1);
 
-        // Reduce spacing even more to bring buttons closer
-        VBox buttonContainer = new VBox(40, buttonBox);
-        buttonBox.setSpacing(8);
+        VBox buttonContainer = new VBox(20, buttonGrid);
         buttonContainer.setPadding(new Insets(20, 0, 0, 0));
 
         int[] dropcapacities = new int[numberDropdowns.length];
@@ -178,20 +205,47 @@ public class SimulationGUI extends Application implements ISimulationUI {
         serviceGrid.add(servicePointViews[2], 0, 1);
         serviceGrid.add(servicePointViews[3], 1, 1);
 
+        // Clock Label
+        clockLabel = new Label("Simulation Time: 0.0s");
+        clockLabel.setFont(new Font(18));
+        clockLabel.setStyle("-fx-text-fill: white;");
+        clockLabel.getStyleClass().add("clock-label");
+
+        // Chatter Area
+        chatterArea = new TextArea();
+        chatterArea.setFont(new Font(16));
+        chatterArea.setEditable(false);
+        chatterArea.setWrapText(true);
+        chatterArea.setPrefHeight(200);
+        chatterArea.setPrefWidth(300);
+        chatterArea.setStyle("-fx-background-color: #F2F2F2; -fx-text-fill: black; -fx-border-color: #493D9E; -fx-border-width: 2px;");
+
+        // Chatter Area Title
+        Label chatterTitle = new Label("Conference Chatter");
+        chatterTitle.setFont(new Font(18));
+        chatterTitle.setStyle("-fx-text-fill: black;");
+
         // MAIN LAYOUT
-        VBox rightLayout = new VBox(5);
-        rightLayout.setAlignment(Pos.CENTER);
-        rightLayout.getChildren().addAll(searchBox, dropdownGrid, buttonContainer, statusLabel, serviceGrid);
+        VBox leftLayout = new VBox(10);
+        leftLayout.setAlignment(Pos.TOP_LEFT);
+        leftLayout.getChildren().addAll(resultsTitle, resultsArea);
 
-        HBox mainLayout = new HBox(30);
-        mainLayout.setAlignment(Pos.CENTER);
-        mainLayout.getChildren().addAll(resultsArea, rightLayout);
+        VBox rightLayout = new VBox(20);
+        rightLayout.setAlignment(Pos.TOP_RIGHT);
+        rightLayout.getChildren().addAll(clockLabel, chatterTitle, chatterArea);
 
-        StackPane root = new StackPane(mainLayout);
-        StackPane.setAlignment(mainLayout, Pos.CENTER);
+        VBox centerLayout = new VBox(20);
+        centerLayout.setAlignment(Pos.CENTER);
+        centerLayout.getChildren().addAll(searchBox, buttonContainer, statusLabel, serviceGrid);
+
+        BorderPane mainLayout = new BorderPane();
+        mainLayout.setLeft(leftLayout);
+        mainLayout.setCenter(centerLayout);
+        mainLayout.setRight(rightLayout);
+        mainLayout.setPadding(new Insets(20));
 
         // Scene and window settings
-        Scene scene = new Scene(root, 1000, 700);
+        Scene scene = new Scene(mainLayout, 1000, 700);
 
         URL cssURL = getClass().getResource("/styles/style.css");
         if (cssURL != null) {
@@ -209,16 +263,37 @@ public class SimulationGUI extends Application implements ISimulationUI {
 
         controller = new Controller(this, this);
 
+        // Initialize MongoDB connection and fetch chatter messages
+        mongoDBConnection = new DatabaseUtils();
+        chatterMessages = mongoDBConnection.getChatter();
+
+        // Initialize ChatterDisplayUtils
+        chatterDisplayUtils = new ChatterDisplayUtils();
+
         // Button functionality
         startButton.setOnAction(e -> {
             try {
                 double duration = Double.parseDouble(durationField.getText());
                 int[] capacities = new int[numberDropdowns.length];
+                boolean validCapacities = true;
 
                 for (int i = 0; i < numberDropdowns.length; i++) {
                     capacities[i] = numberDropdowns[i].getValue();
+                    if (capacities[i] <= 1) {
+                        validCapacities = false;
+                        break;
+                    }
                 }
-                controller.startSimulation(duration, capacities);
+
+                if (!validCapacities) {
+                    statusLabel.setText("All capacities must be higher than 1");
+                } else if (delay.getText().isEmpty()) {
+                    statusLabel.setText("Delay field cannot be empty!");
+                } else {
+                    controller.startSimulation(duration, capacities);
+                    startClock(duration);
+                    chatterDisplayUtils.startChatterTimeline(chatterArea, chatterMessages, 1000);
+                }
             } catch (NumberFormatException ex) {
                 statusLabel.setText("Enter a valid number!");
             }
@@ -227,13 +302,10 @@ public class SimulationGUI extends Application implements ISimulationUI {
 
     private ServicePointView createStyledServicePoint(String name, String cssClass, int capacity) {
         ServicePointView spv = new ServicePointView(name);
-        //spv.setAlignment(Pos.BASELINE_LEFT); // Force text alignment inside the box
         spv.setUserData(capacity);
 
         spv.getStyleClass().add("service-point");
         spv.getStyleClass().add(cssClass);
-
-        //spv.getChildren().get(0).setTranslateX(-10);
 
         // Size restrictions
         spv.setMaxHeight(150);
@@ -241,11 +313,33 @@ public class SimulationGUI extends Application implements ISimulationUI {
         spv.setMaxWidth(200);
         spv.setMinWidth(200);
 
-        //spv.setUserData(capacity);
-
         return spv;
     }
 
+    // Start the GUI clock
+    private void startClock(double duration) {
+        simulationTime = 0.0;
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            simulationTime += 1.0;
+            controller.updateClock();
+            if (simulationTime >= duration) {
+                stopClock();
+                chatterDisplayUtils.stopChatterTimeline();
+            }
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+    }
+
+    private void stopClock() {
+        if (timeline != null) {
+            timeline.stop();
+        }
+    }
+
+    public void updateClockLabel(String time) {
+        clockLabel.setText(time);
+    }
 
     public void updateStatusLabel(String message) {
         Platform.runLater(() -> statusLabel.setText(message));
