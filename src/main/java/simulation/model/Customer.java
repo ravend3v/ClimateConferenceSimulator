@@ -17,6 +17,7 @@ public class Customer {
 	private static int completedCount = 0;
 	private static int lastID;
 	private static double throughPut;
+	private Queue queue;
 	private static HashMap<CustomerType,Integer> typeCount = new HashMap<>();
 
 	static {
@@ -25,12 +26,13 @@ public class Customer {
 		}
 	}
 
-	public Customer(CustomerType type){
+	public Customer(CustomerType type,Queue mainQueue) {
 		id = i++;
 		lastID = id;
 		arrivalTime = Clock.getInstance().getTime();
 		this.type = type;
 		typeCount.put(type, typeCount.get(type) + 1);
+		this.queue = mainQueue;
 		//Trace.out(Trace.Level.INFO, "New customer no " + i + " arrived at "+ arrivalTime);
 	}
 
@@ -78,6 +80,7 @@ public class Customer {
 		Trace.out(Trace.Level.INFO,"Customer "+ id + " stayed: " + (exitTime - arrivalTime));
 		sum += (long) (exitTime - arrivalTime);
 		double average = (double) sum / id;
+		queue.addCompleted(exitTime-arrivalTime);
 		throughPut = average;
 		System.out.println("Average throughput time of customers so far "+ average);
 

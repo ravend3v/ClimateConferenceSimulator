@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"database"},{"l":"eduni.distributions"},{"l":"simulation.controller"},{"l":"simulation.framework"},{"l":"simulation.model"},{"l":"simulation.view"},{"l":"test"},{"l":"unit_tests"},{"l":"utils"}];updateSearchResults();
