@@ -101,7 +101,8 @@ public class SimulationResults {
                     serviceThroughput,
                     averageServiceTime,
                     averageResponseTime,
-                    averageQueueLength
+                    averageQueueLength,
+                    customerTypeCounts
             );
 
         } catch (Exception e) {
@@ -109,6 +110,7 @@ public class SimulationResults {
             e.printStackTrace();
         }
     }
+
 
     public String getResultsAsString() {
         double totalTime = Clock.getInstance().getTime();
@@ -160,7 +162,7 @@ public class SimulationResults {
 
 
     // Method to save the results to the database
-    private void saveResultsToDatabase(int arrivedClientsCount, int completedClientsCount, double activeServiceTime, double activeServiceTimeEntrance, double activeServiceTimeRenewable, double activeServiceTimeShowroom, double activeServiceTimeMain, double totalTime, double servicePointUtilization, double serviceThroughput, double averageServiceTime, double averageResponseTime, double averageQueueLength) {
+    private void saveResultsToDatabase(int arrivedClientsCount, int completedClientsCount, double activeServiceTime, double activeServiceTimeEntrance, double activeServiceTimeRenewable, double activeServiceTimeShowroom, double activeServiceTimeMain, double totalTime, double servicePointUtilization, double serviceThroughput, double averageServiceTime, double averageResponseTime, double averageQueueLength,HashMap<CustomerType, Integer> customerTypeCounts) {
         new Thread(() -> {
             try {
                 MongoDatabase database = DatabaseUtils.getDatabase(EnvUtils.getEnv("DB_NAME"));
@@ -189,7 +191,11 @@ public class SimulationResults {
                         .append("serviceThroughput", serviceThroughput)
                         .append("averageServiceTime", averageServiceTime)
                         .append("averageResponseTime", averageResponseTime)
-                        .append("averageQueueLength", averageQueueLength));
+                        .append("averageQueueLength", averageQueueLength))
+                        .append("studentCount", customerTypeCounts.get(CustomerType.STUDENT))
+                        .append("deciderCount", customerTypeCounts.get(CustomerType.DECIDER))
+                        .append("expertCount", customerTypeCounts.get(CustomerType.EXPERT))
+                        ;
 
                 var result = collection.insertOne(update);
                 System.out.println("Update result: " + result);
