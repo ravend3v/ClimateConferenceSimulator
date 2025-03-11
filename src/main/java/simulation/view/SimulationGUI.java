@@ -276,14 +276,9 @@ public class SimulationGUI extends Application implements ISimulationUI {
             try {
                 double duration = Double.parseDouble(durationField.getText());
                 int[] capacities = new int[numberDropdowns.length];
-                boolean validCapacities = true;
 
                 for (int i = 0; i < numberDropdowns.length; i++) {
                     capacities[i] = numberDropdowns[i].getValue();
-                    if (capacities[i] <= 1) {
-                        validCapacities = false;
-                        break;
-                    }
                 }
 
                 if (delay.getText().isEmpty()) {
