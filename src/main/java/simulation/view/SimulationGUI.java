@@ -287,6 +287,8 @@ public class SimulationGUI extends Application implements ISimulationUI {
 
                 if (!validCapacities) {
                     statusLabel.setText("All capacities must be higher than 1");
+                } else if (delay.getText().isEmpty()) {
+                    statusLabel.setText("Delay field cannot be empty!");
                 } else {
                     controller.startSimulation(duration, capacities);
                     startClock(duration);

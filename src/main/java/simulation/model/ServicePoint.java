@@ -12,7 +12,7 @@ public class ServicePoint {
 	private final EventList eventList;
 	private final EventType scheduledEventType;
 
-	private final Queue mainQueue;
+	private Queue mainQueue;
 
   	protected int capacity;
   	protected int currentCustomerCount;
