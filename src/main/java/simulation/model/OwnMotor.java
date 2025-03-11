@@ -48,7 +48,7 @@ public class OwnMotor extends Motor {
 			case ARR1:
 				CustomerDistribution distribution = new CustomerDistribution();
 				CustomerType type = CustomerType.fromInt(distribution.getNextCustomerType());
-				customer = new Customer(type);
+				customer = new Customer(type,queue);
 				servicePoints[0].addToQueue(customer);
 				controller.showNewCustomer(customer.getId(),customer.getType());
 				System.out.println("arr1: "+customer.getId());

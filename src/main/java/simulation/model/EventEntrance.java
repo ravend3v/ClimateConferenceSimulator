@@ -33,8 +33,6 @@ public class EventEntrance extends ServicePoint{
             processing.remove(c);
             setBusy(false);
             currentCustomerCount--;
-            double responseTime = (c.getExitTime() - c.getArrivalTime());
-            getMainQueue().addCompleted(responseTime);
             completedServices++;
         }
 
