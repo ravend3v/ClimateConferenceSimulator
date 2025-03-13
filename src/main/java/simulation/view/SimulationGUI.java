@@ -47,7 +47,7 @@ public class SimulationGUI extends Application implements ISimulationUI {
         resultsArea.setFont(new Font(16));
         resultsArea.setEditable(false);
         resultsArea.setWrapText(true);
-        resultsArea.setPrefHeight(770); // Adjust height to match the window
+        resultsArea.setPrefHeight(765); // Adjust height to match the window
         resultsArea.setPrefWidth(500); // Adjust width as needed
 
         // Results Area Title
@@ -224,7 +224,7 @@ public class SimulationGUI extends Application implements ISimulationUI {
         chatterArea.setFont(new Font(16));
         chatterArea.setEditable(false);
         chatterArea.setWrapText(true);
-        chatterArea.setPrefHeight(200);
+        chatterArea.setPrefHeight(670);
         chatterArea.setPrefWidth(300);
         chatterArea.getStyleClass().add("text-area");
 
