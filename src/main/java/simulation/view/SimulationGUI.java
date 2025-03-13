@@ -47,8 +47,8 @@ public class SimulationGUI extends Application implements ISimulationUI {
         resultsArea.setFont(new Font(16));
         resultsArea.setEditable(false);
         resultsArea.setWrapText(true);
-        resultsArea.setPrefHeight(700); // Adjust height to match the window
-        resultsArea.setPrefWidth(300); // Adjust width as needed
+        resultsArea.setPrefHeight(770); // Adjust height to match the window
+        resultsArea.setPrefWidth(500); // Adjust width as needed
 
         // Results Area Title
         Label resultsTitle = new Label("Results / Output Area");
@@ -59,11 +59,14 @@ public class SimulationGUI extends Application implements ISimulationUI {
         Label durationLabel = new Label("Simulation Duration:");
         durationLabel.setFont(new Font(18));
         durationLabel.setStyle("-fx-text-fill: black;");
+        durationLabel.setPadding(new Insets(15, 0, 0, 0)); // Moves it down closer to the text field
 
         TextField durationField = new TextField();
         durationField.setPromptText("Enter time...");
         durationField.setMaxWidth(200);
         durationField.setStyle("-fx-text-fill: black;");
+        durationField.setTranslateY(-5);
+        durationField.setPadding(new Insets(-18, 0, 0, 0)); // Moves it up closer to "Simulation Duration"
 
         // Capacity dropdowns
         ComboBox<Integer>[] numberDropdowns = new ComboBox[4];
@@ -96,7 +99,7 @@ public class SimulationGUI extends Application implements ISimulationUI {
                         setText("");
                     } else {
                         setText(item.toString());
-                        setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
+                        setStyle("-fx-text-fill: black; -fx-font-size: 14px;");
                     }
                 }
             });
@@ -110,12 +113,10 @@ public class SimulationGUI extends Application implements ISimulationUI {
             numberDropdowns[i].setMinWidth(dropdownWidth);
             numberDropdowns[i].setMaxWidth(dropdownWidth);
             numberDropdowns[i].setStyle(
-                    "-fx-background-color: linear-gradient(to bottom, #4A0066, #220033);" +
-                            "-fx-border-color: #D269FF;" +
-                            "    -fx-effect: dropshadow(gaussian, rgba(210, 105, 255, 0.9), 20, 0.7, 0, 0);" +
-                            "-fx-border-radius: 5px;" +
-                            "-fx-text-fill: white;" +
-                            "-fx-font-size: 14px;"
+                    "-fx-background-color: white; " +
+                            "-fx-border-color: #701f8f;" +
+                            "-fx-effect: dropshadow(gaussian, rgba(73, 61, 158, 0.7), 10, 0.5, 0, 0);" +
+                            "-fx-border-radius: 5px; "
             );
         }
 
@@ -138,10 +139,10 @@ public class SimulationGUI extends Application implements ISimulationUI {
             dropdownGrid.add(numberDropdowns[i], 1, i);
         }
 
-        VBox searchBox = new VBox(10, durationLabel, durationField, dropdownGrid);
-        searchBox.setSpacing(8);
+        VBox searchBox = new VBox(15, durationLabel, durationField, dropdownGrid);
+        searchBox.setSpacing(25);
         searchBox.setAlignment(Pos.CENTER);
-        searchBox.setPadding(new Insets(0, 0, 20, 0));
+        searchBox.setPadding(new Insets(10, 0, 0, 0));
 
         // Textfield for delay
         Label delayLabel = new Label("Delay:");
@@ -149,8 +150,10 @@ public class SimulationGUI extends Application implements ISimulationUI {
         delay = new TextField();
         delay.setPromptText("Set delay...");
         delay.setStyle("-fx-text-fill: black;");
+        statusLabel.setTranslateY(-10);
         statusLabel.setAlignment(Pos.CENTER);
         statusLabel.setStyle("-fx-text-fill: black;");
+        statusLabel.setPadding(new Insets(0, 0, 20, 0)); // Moves status messages closer to Delay row
 
         // Button for slowing down simulation
         Button slowdownBtn = new Button("Slow down");
@@ -167,16 +170,20 @@ public class SimulationGUI extends Application implements ISimulationUI {
         // Use GridPane for better layout
         GridPane buttonGrid = new GridPane();
         buttonGrid.setHgap(10);
-        buttonGrid.setVgap(10);
+        buttonGrid.setVgap(5);
         buttonGrid.setAlignment(Pos.CENTER);
+
+        // Delay-kenttä hieman lyhyemmäksi, jotta rivin pituus pienenee
+        delay.setPrefWidth(120);
+
         buttonGrid.add(delayLabel, 0, 0);
         buttonGrid.add(delay, 1, 0);
-        buttonGrid.add(slowdownBtn, 0, 1);
-        buttonGrid.add(speedupBtn, 1, 1);
-        buttonGrid.add(startButton, 0, 2, 2, 1);
+        buttonGrid.add(slowdownBtn, 2, 0);
+        buttonGrid.add(speedupBtn, 3, 0);
+        buttonGrid.add(startButton, 4, 0);
 
         VBox buttonContainer = new VBox(20, buttonGrid);
-        buttonContainer.setPadding(new Insets(20, 0, 0, 0));
+        buttonContainer.setPadding(new Insets(15, 0, 0, 0));
 
         int[] dropcapacities = new int[numberDropdowns.length];
         for (int i = 0; i < numberDropdowns.length; i++) {
@@ -199,8 +206,8 @@ public class SimulationGUI extends Application implements ISimulationUI {
         GridPane serviceGrid = new GridPane();
         serviceGrid.setHgap(20);
         serviceGrid.setVgap(20);
-        serviceGrid.setPadding(new Insets(20));
-        serviceGrid.setAlignment(Pos.CENTER);
+        serviceGrid.setPadding(new Insets(-30, 20, 20, 20));
+        serviceGrid.setAlignment(Pos.TOP_CENTER);
         serviceGrid.add(servicePointViews[0], 0, 0);
         serviceGrid.add(servicePointViews[1], 1, 0);
         serviceGrid.add(servicePointViews[2], 0, 1);
